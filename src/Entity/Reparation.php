@@ -95,6 +95,8 @@ class Reparation
     {
         $this->bon_reparations = new ArrayCollection();
         $this->commandes = new ArrayCollection();
+        $this->reparateurReparations = new ArrayCollection();
+        $this->pannes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -231,6 +233,77 @@ class Reparation
             if ($commande->getReparation() === $this) {
                 $commande->setReparation(null);
             }
+        }
+
+        return $this;
+    }
+
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): self
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ReparateurReparation[]
+     */
+    public function getReparateurReparations(): Collection
+    {
+        return $this->reparateurReparations;
+    }
+
+    public function addReparateurReparation(ReparateurReparation $reparateurReparation): self
+    {
+        if (!$this->reparateurReparations->contains($reparateurReparation)) {
+            $this->reparateurReparations[] = $reparateurReparation;
+            $reparateurReparation->setReparation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReparateurReparation(ReparateurReparation $reparateurReparation): self
+    {
+        if ($this->reparateurReparations->contains($reparateurReparation)) {
+            $this->reparateurReparations->removeElement($reparateurReparation);
+            // set the owning side to null (unless already changed)
+            if ($reparateurReparation->getReparation() === $this) {
+                $reparateurReparation->setReparation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panne[]
+     */
+    public function getPannes(): Collection
+    {
+        return $this->pannes;
+    }
+
+    public function addPanne(Panne $panne): self
+    {
+        if (!$this->pannes->contains($panne)) {
+            $this->pannes[] = $panne;
+            $panne->addReparation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanne(Panne $panne): self
+    {
+        if ($this->pannes->contains($panne)) {
+            $this->pannes->removeElement($panne);
+            $panne->removeReparation($this);
         }
 
         return $this;

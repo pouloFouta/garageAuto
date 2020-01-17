@@ -1,13 +1,43 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+        in_database:
+            entity:
+                class: App\entity\User
+                property: email                                                                                                                   
+
+    
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+
+            provider:  in_database
+
+            form_login:
+                login_path: account_login
+                check_path: account_login
+                
+            logout:
+                path: account_logout
+                target: account_login
+
+
+
+
+                #guard:
+
+                #authenticators:
+              #- App\Security\LoginFormAuthenticator
+                #logout :
+                #path: security_logout
+                #target: accueil
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -19,4 +49,6 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        # - { path: ^/admin, roles: ROLE_ADMIN }
