@@ -35,7 +35,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $hash;
+    private $mot_de_passe;
 
     public function getId(): ?int
     {
@@ -78,24 +78,22 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getHash(): ?string
+   /* public function getHash(): ?string
     {
         return $this->hash;
     }
-
-    public function setHash(string $hash): self
-    {
-        $this->hash = $hash;
-
-        return $this;
-    }
+*/
+   
+    
     public function getRoles()
     {
         return ['ROLE_USER'];
     }
+   
     public function getPassword()
+
     {
-        return $this->hash;
+        return $this->mot_de_passe; 
     }
 
     public function getSalt() {}
@@ -104,5 +102,19 @@ class User implements UserInterface
     {
         return $this->email;
     }
-    public function eraseCredentials();
+    
+    public function eraseCredentials(){}
+
+    public function getMotDePasse(): ?string
+    {
+        return $this->mot_de_passe;
+    }
+
+    public function setMotDePasse(string $mot_de_passe): self
+    {
+        $this->mot_de_passe = $mot_de_passe;
+
+        return $this;
+    }
+    
 }

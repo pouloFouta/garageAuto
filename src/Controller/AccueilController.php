@@ -46,6 +46,17 @@ class AccueilController extends AbstractController
         return $this->render('offre.html.twig');
     }
 
+
+     /**
+     * @Route("/partenariat", name="partenariat")
+     */
+
+
+    public function partenariat()
+    {
+        return $this->render('partenariat.html.twig');
+    }
+
      /**
      * @Route("/contact", name="contact")
      */

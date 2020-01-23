@@ -1,13 +1,13 @@
 security:
     encoders:
         App\Entity\User:
-            algorithm: bcrypt
+            algorithm: auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
         in_database:
             entity:
-                class: App\entity\User
+                class: App\Entity\User
                 property: email                                                                                                                   
 
     
@@ -49,6 +49,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
         # - { path: ^/admin, roles: ROLE_ADMIN }
+         #- { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
