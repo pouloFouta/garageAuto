@@ -31,6 +31,7 @@ class AccountController extends AbstractController
          
     }
 
+    
     /**
      * se deconnecter
      * @Route("/logout", name="account_logout")
@@ -63,8 +64,7 @@ class AccountController extends AbstractController
             $manager->persist($user);
             $manager->flush($user);
 
-            $this->addFlash(
-                    'success', 'Votre compte est bien crée, vous pouvez maintenant vous connectez au site !');
+            $this->addFlash('success', 'Votre compte est bien crée, vous pouvez maintenant vous connectez au site !');
 
             return $this->redirectToRoute('account_login');
 

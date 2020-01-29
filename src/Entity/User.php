@@ -4,9 +4,16 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * 
+ * @UniqueEntity(
+ * fields ={"email"},
+ * message = "un utilisateur est dejà inscrit avec cet email, merci de la modifier"
+ * )
  */
 class User implements UserInterface
 {
@@ -19,23 +26,36 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner un prénom valide")
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Veuillez renseigner un nom valide")
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="Veuillez renseigner un email valide")
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=6, minMessage="Votre mot de passe est trop court")
      */
     private $mot_de_passe;
+
+
+    /**
+     * 
+     * @Assert\EqualTo(propertyPath="mot_de_passe", message="Vous n'avez pas correctement confirmé le mot de passe!")
+     */
+    public $confirmation_mot_de_passe;
+
+
 
     public function getId(): ?int
     {
@@ -78,11 +98,7 @@ class User implements UserInterface
         return $this;
     }
 
-   /* public function getHash(): ?string
-    {
-        return $this->hash;
-    }
-*/
+  
    
     
     public function getRoles()

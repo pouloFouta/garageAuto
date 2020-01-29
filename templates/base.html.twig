@@ -53,17 +53,38 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('offres') }}">Offres/Promotions</a>
             </li>
-
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('contact') }}" tabindex="-1" aria-disabled="true">Contact</a>
+                <a class="nav-link" href="{{ path('partenariat') }}">Nos partenaires</a>
             </li>
 
-            {#{% if not app.user %}#}
-   
-    <li class="nav-item "><a class="nav-link" href="{{ path('account_register') }}"><span class="fa fa-user-plus"></span> Devenir membre</button></a></li>
-      <li class="nav-item"><a class="nav-link" href="{{ path('account_login') }}"><span class="fa fa-sign-in"></span> Se connecter</a></li>
-      </div>
-       
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+            </li>
+         </ul>
+                 {# nav flexible en fonction de l'utilisateur#}
+      <ul class="navbar-nav ml-auto"> </ul>
+             
+        
+            {% if app.user %}
+
+            <li class="nav-item">
+            <a class="nav-link" href="{{ path('account_logout') }}" >Déconnexion <i class="fa fa-sign-out"></i></a>
+            </li>
+  
+            {% else %}
+               <li class="nav-item">
+            <a class="nav-link" href="{{ path('account_register') }}"><span class="fa fa-user-plus"></span> Devenir membre</button></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ path('account_login') }}" ><span class="fa fa-sign-in"></span> Se connecter</a>
+            </li>
+            {% endif %}
+                
+      
+      {# <li class="nav-item "><a class="nav-link" href="{{ path('account_register') }}"><span class="fa fa-user-plus"></span> Devenir membre</button></a></li>
+      <li class="nav-item "><a class="nav-link" href="{{ path('account_login') }}"><span class="fa fa-sign-in"></span> Se connecter</a></li>
+      #}
+      
         </ul>
         
     </div>
@@ -126,7 +147,7 @@
 
 
                                 <p>
-                                    <a href="{{ path('partenariat') }}">Partenariat</a>
+                                    <a href="{{ path('partenariat') }}"> Nos Partenaires</a>
                                 </p>
 
 

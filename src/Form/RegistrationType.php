@@ -27,6 +27,9 @@ class RegistrationType extends AbstractType
             ->add('mot_de_passe',PasswordType::class, [
                 'help' => 'Tapez votre mot de passe de minimum 6 caractères',
             ])
+            ->add('confirmation_mot_de_passe',PasswordType::class, [
+                'help' => 'confirmer le mot de passe',
+            ])
         ;
     }
 
