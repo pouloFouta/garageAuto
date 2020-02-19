@@ -25,7 +25,7 @@ class RegistrationType extends AbstractType
                 'help' => 'Votre adresse email',
             ])
             ->add('mot_de_passe',PasswordType::class, [
-                'help' => 'Tapez votre mot de passe de minimum 6 caractères',
+                'help' => 'Tapez votre mot de passe de minimum 8 caractères',
             ])
             ->add('confirmation_mot_de_passe',PasswordType::class, [
                 'help' => 'confirmer le mot de passe',

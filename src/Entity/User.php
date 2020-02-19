@@ -44,7 +44,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Length(min=6, minMessage="Votre mot de passe est trop court")
+     * @Assert\Length(min=8, minMessage="Votre mot de passe est trop court")
      */
     private $mot_de_passe;
 
@@ -133,4 +133,9 @@ class User implements UserInterface
         return $this;
     }
     
+    public function getFullName(){
+
+        return "{$this->prenom} {$this->nom}";
+
+    }
 }
