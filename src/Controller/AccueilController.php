@@ -69,11 +69,7 @@ class AccueilController extends AbstractController
 
     
     
-
-
-
-
-    /**
+    /**  a delete si possible
      * @Route("/connexion", name="connexion")
      */
     public function seConnecter()

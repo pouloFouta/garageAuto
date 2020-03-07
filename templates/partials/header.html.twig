@@ -1,0 +1,84 @@
+<nav class=" navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo garage" height="42" width="42"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('accueil') }}">Accueil <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Services
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ path('entretien') }}">Entretien et diagnostic</a>
+                    <a class="dropdown-item" href="{{ path('location') }}">Locations véhicules</a>
+                    <a class="dropdown-item" href="{{ path('ventes') }}">Ventes véhicules</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('offres') }}">Offres/Promotions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('partenariat') }}">Nos partenaires</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+            </li>
+         </ul>
+                 {# nav flexible en fonction de l'utilisateur#}
+      <ul class="navbar-nav ml-auto"> 
+             
+        
+            {% if app.user %}
+
+            <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" id="accountDropdownLink" data-toggle ="dropdown"> {{app.user.fullName}}
+            
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdownLink"> 
+            <a href="{{path('user_show') }}" class="dropdown-item"> Mon compte </a>
+             <a href="{{path('account_profile') }}" class="dropdown-item"> Modifier mon profil </a>
+              
+              <div class="class dropdown-divider"></div>
+               <a href="{{path('account_logout')}}" class="dropdown-item"> Déconnexion</a>
+            
+            </div>
+            </li>
+            
+            
+            
+           {# <li class="nav-item">
+            <a class="nav-link" href="{{ path('account_logout') }}" >Déconnexion <i class="fa fa-sign-out"></i></a>
+            </li> #}
+  
+            {% else %}
+               <li class="nav-item">
+            <a class="nav-link" href="{{ path('account_register') }}"><span class="fa fa-user-plus"></span> Devenir membre</button></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{{ path('account_login') }}" ><span class="fa fa-sign-in"></span> Se connecter</a>
+            </li>
+            {% endif %}
+                
+      
+      {# <li class="nav-item "><a class="nav-link" href="{{ path('account_register') }}"><span class="fa fa-user-plus"></span> Devenir membre</button></a></li>
+      <li class="nav-item "><a class="nav-link" href="{{ path('account_login') }}"><span class="fa fa-sign-in"></span> Se connecter</a></li>
+      #}
+      
+     </ul> 
+        
+    </div>
+</nav>
+
+{% for message in app.flashes('success')%}
+<div class="alert alert-success"> {{message}} </div>
+{% endfor %}

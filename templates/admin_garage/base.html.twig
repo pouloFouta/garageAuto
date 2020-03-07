@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
+    <title>{% block title %}Administration du site!{% endblock %}</title>
     {% block stylesheets %}
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -25,7 +25,7 @@
 </head>
 <body>
 
-{% include "partials/header.html.twig" %}
+{% include "admin_garage/partials/header.html.twig" %}
 
 
 {% block body %}
@@ -37,7 +37,7 @@
 {% endblock %}
 
 
-{% include "partials/footer.html.twig" %}
+{% include "admin_garage/partials/footer.html.twig" %}
 
 </body>
 
