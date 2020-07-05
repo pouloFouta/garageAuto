@@ -39,12 +39,7 @@ class Reparation
     private $statut;
 
 
-    /**
-     * @ORM\OneToMany(targetEntity="BonReparation" ,mappedBy="reparation")
-     */
-
-    private $bon_reparations;
-
+   
 
     /**
      * @ORM\ManyToOne(targetEntity="Facture" ,inversedBy="reparations")
@@ -53,13 +48,7 @@ class Reparation
     private $facture;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Vehicule" ,inversedBy="lesReparations")
-     */
-
-    private $numeroChassis;
-
-
+   
     /**
      * @ORM\OneToMany(targetEntity="Commande" ,mappedBy="reparation")
      */
@@ -81,22 +70,33 @@ class Reparation
      * @ORM\OneToMany(targetEntity="ReparateurReparation" ,mappedBy="reparation")
      */
 
-    private $reparateurReparations;
+     
 
+    /** 
+    * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="reparations")
+    * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+    */
+   private $vehicule;
+
+
+   
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Panne", mappedBy="reparation")
+     */
+    private $pannes;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Panne" ,mappedBy="reparation")
+     * @ORM\OneToMany(targetEntity="App\Entity\GestionVehicule", mappedBy="reparation")
      */
-
-
-    private $pannes;
+    private $gestionVehicules;
 
     public function __construct()
     {
-        $this->bon_reparations = new ArrayCollection();
+       
         $this->commandes = new ArrayCollection();
         $this->reparateurReparations = new ArrayCollection();
         $this->pannes = new ArrayCollection();
+        $this->gestionVehicules = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -152,36 +152,7 @@ class Reparation
         return $this;
     }
 
-    /**
-     * @return Collection|BonReparation[]
-     */
-    public function getBonReparations(): Collection
-    {
-        return $this->bon_reparations;
-    }
-
-    public function addBonReparation(BonReparation $bonReparation): self
-    {
-        if (!$this->bon_reparations->contains($bonReparation)) {
-            $this->bon_reparations[] = $bonReparation;
-            $bonReparation->setReparation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeBonReparation(BonReparation $bonReparation): self
-    {
-        if ($this->bon_reparations->contains($bonReparation)) {
-            $this->bon_reparations->removeElement($bonReparation);
-            // set the owning side to null (unless already changed)
-            if ($bonReparation->getReparation() === $this) {
-                $bonReparation->setReparation(null);
-            }
-        }
-
-        return $this;
-    }
+    
 
     public function getFacture(): ?Facture
     {
@@ -195,17 +166,7 @@ class Reparation
         return $this;
     }
 
-    public function getNumeroChassis(): ?Vehicule
-    {
-        return $this->numeroChassis;
-    }
-
-    public function setNumeroChassis(?Vehicule $numeroChassis): self
-    {
-        $this->numeroChassis = $numeroChassis;
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection|Commande[]
@@ -250,33 +211,18 @@ class Reparation
         return $this;
     }
 
-    /**
-     * @return Collection|ReparateurReparation[]
-     */
-    public function getReparateurReparations(): Collection
+    
+
+   
+
+    public function getVehicule(): ?Vehicule
     {
-        return $this->reparateurReparations;
+        return $this->vehicule;
     }
 
-    public function addReparateurReparation(ReparateurReparation $reparateurReparation): self
+    public function setVehicule(?Vehicule $vehicule): self
     {
-        if (!$this->reparateurReparations->contains($reparateurReparation)) {
-            $this->reparateurReparations[] = $reparateurReparation;
-            $reparateurReparation->setReparation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReparateurReparation(ReparateurReparation $reparateurReparation): self
-    {
-        if ($this->reparateurReparations->contains($reparateurReparation)) {
-            $this->reparateurReparations->removeElement($reparateurReparation);
-            // set the owning side to null (unless already changed)
-            if ($reparateurReparation->getReparation() === $this) {
-                $reparateurReparation->setReparation(null);
-            }
-        }
+        $this->vehicule = $vehicule;
 
         return $this;
     }
@@ -293,7 +239,7 @@ class Reparation
     {
         if (!$this->pannes->contains($panne)) {
             $this->pannes[] = $panne;
-            $panne->addReparation($this);
+            $panne->setReparation($this);
         }
 
         return $this;
@@ -303,7 +249,41 @@ class Reparation
     {
         if ($this->pannes->contains($panne)) {
             $this->pannes->removeElement($panne);
-            $panne->removeReparation($this);
+            // set the owning side to null (unless already changed)
+            if ($panne->getReparation() === $this) {
+                $panne->setReparation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|GestionVehicule[]
+     */
+    public function getGestionVehicules(): Collection
+    {
+        return $this->gestionVehicules;
+    }
+
+    public function addGestionVehicule(GestionVehicule $gestionVehicule): self
+    {
+        if (!$this->gestionVehicules->contains($gestionVehicule)) {
+            $this->gestionVehicules[] = $gestionVehicule;
+            $gestionVehicule->setReparation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGestionVehicule(GestionVehicule $gestionVehicule): self
+    {
+        if ($this->gestionVehicules->contains($gestionVehicule)) {
+            $this->gestionVehicules->removeElement($gestionVehicule);
+            // set the owning side to null (unless already changed)
+            if ($gestionVehicule->getReparation() === $this) {
+                $gestionVehicule->setReparation(null);
+            }
         }
 
         return $this;

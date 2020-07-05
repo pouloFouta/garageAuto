@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Role;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -17,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * message = "un utilisateur est dejà inscrit avec cet email, merci de la modifier"
  * )
  */
-class User implements UserInterface
+class User implements UserInterface 
 {
     /**
      * @ORM\Id()
@@ -25,6 +26,8 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    //extends Personne  
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -109,13 +112,24 @@ class User implements UserInterface
 
         return $this;
     }
-
   
    
     
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        
+
+        $roles =$this->userRoles->map(function($role) {
+
+           return $role->getTitle();
+        })->toArray();
+
+        $roles [] = 'ROLE_USER';
+
+       
+
+        
+        return $roles;
     }
    
     public function getPassword()

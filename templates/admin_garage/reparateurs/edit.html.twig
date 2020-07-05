@@ -1,0 +1,28 @@
+{% extends "admin_garage/base.html.twig" %}
+
+{% block title %} Modification du réparateur {{ reparateur.nom }} {% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="my-5">  Modification du réparateur {{ reparateur.nom }} qui habite à  {{ reparateur.adresse }} </h1>
+
+    <div class="alert alert-info">
+    <strong> réference du réparateur :</strong> {{reparateur.nom}} {{reparateur.prenom}}
+    
+    </div>
+
+  {{ form_start(form) }}
+
+  {{ form_widget(form) }}
+  
+  <button type="submit" class="btn btn-primary"> 
+  <i class="fas fa-check"> </i>
+    Enregistrer les modifications
+  </button>
+  {{ form_end(form) }}
+
+</div>
+    
+{% endblock %}

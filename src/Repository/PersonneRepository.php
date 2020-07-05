@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Personne;
+use App\Entity\Reparateur;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -47,4 +48,24 @@ class PersonneRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+       /**
+       ** @return Personne[] Returns an array of Personne objects
+      */
+
+    public function findAllReparateurs()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.personneType = :r')
+            ->setParameter('r', 'Reparateur')
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+        
+        
+
+        
+    }
 }

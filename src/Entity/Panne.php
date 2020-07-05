@@ -33,18 +33,13 @@ class Panne
      */
     private $est_resolu;
 
-
     /**
-     * @ORM\ManyToMany(targetEntity="Reparation" ,inversedBy="reparations")
-     * @ORM\JoinTable(name="pannes_reparations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Reparation", inversedBy="pannes")
      */
+    private $reparation;
 
-    private $reparations;
 
-    public function __construct()
-    {
-        $this->reparations = new ArrayCollection();
-    }
+
 
     public function getId(): ?int
     {
@@ -87,29 +82,17 @@ class Panne
         return $this;
     }
 
-    /**
-     * @return Collection|Reparation[]
-     */
-    public function getReparations(): Collection
+    public function getReparation(): ?Reparation
     {
-        return $this->reparations;
+        return $this->reparation;
     }
 
-    public function addReparation(Reparation $reparation): self
+    public function setReparation(?Reparation $reparation): self
     {
-        if (!$this->reparations->contains($reparation)) {
-            $this->reparations[] = $reparation;
-        }
+        $this->reparation = $reparation;
 
         return $this;
     }
 
-    public function removeReparation(Reparation $reparation): self
-    {
-        if ($this->reparations->contains($reparation)) {
-            $this->reparations->removeElement($reparation);
-        }
-
-        return $this;
-    }
+   
 }

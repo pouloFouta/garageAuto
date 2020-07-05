@@ -40,17 +40,29 @@ class Commande
 
     private $reparation;
 
+
     /**
-     * @ORM\OneToMany(targetEntity="LigneCommande" ,mappedBy="commande")
+     * @ORM\ManyToOne(targetEntity="Fournisseur" ,inversedBy="commandes")
      */
 
-    private $ligneCommandes;
+ 
+      private $fournisseur;
 
-    public function __construct()
-    {
-        $this->ligneCommandes = new ArrayCollection();
-    }
+      /**
+       * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="commande")
+       */
+      private $ligneCommandes;
 
+      public function __construct()
+      {
+          $this->ligneCommandes = new ArrayCollection();
+      }
+
+      
+     
+
+
+    
 
     public function getId(): ?int
     {
@@ -105,6 +117,18 @@ class Commande
         return $this;
     }
 
+    public function getFournisseur(): ?Fournisseur
+    {
+        return $this->fournisseur;
+    }
+
+    public function setFournisseur(?Fournisseur $fournisseur): self
+    {
+        $this->fournisseur = $fournisseur;
+
+        return $this;
+    }
+
     /**
      * @return Collection|LigneCommande[]
      */
@@ -135,4 +159,10 @@ class Commande
 
         return $this;
     }
+
+   
+
+   
+
+    
 }

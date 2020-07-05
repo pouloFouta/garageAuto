@@ -9,7 +9,7 @@ use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,11 +22,14 @@ class AccountController extends AbstractController
     /**
      * se connecter
      * @Route("/login", name="account_login")
+     * 
+     * pour symfony si aucune redirection n'est préciser il renvoie vers la page d'accueil après authentification, 
+     * symfony gère lui même authentification avec le form_login et le check_path (quelle magie derrière !)
      */
     public function login( AuthenticationUtils $utils)
     {
         $error = $utils->getLastAuthenticationError();
-        dump($error);
+        //dump($error);
         $username = $utils->getLastUsername();
         return $this->render('account/login.html.twig',[
         'hasError' => $error !==null,

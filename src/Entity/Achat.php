@@ -32,6 +32,12 @@ class Achat
 
     private $client;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Vehicule", inversedBy="achat", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vehicule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class Achat
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setVehicule(Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
 
         return $this;
     }

@@ -1,5 +1,5 @@
 <nav class=" navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><img src="img/logo.png" alt="logo garage" height="42" width="42"></a>
+    <a class="navbar-brand" href="#"><img src="img/default.png" alt="logo garage" height="100" width="100"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -62,10 +62,10 @@
   
             {% else %}
                <li class="nav-item">
-            <a class="nav-link" href="{{ path('account_register') }}"><span class="fa fa-user-plus"></span> Devenir membre</button></a>
+            <a class="nav-link" href="{{ path('account_register') }}"><span class="fas fa-user-plus"></span> Devenir membre</button></a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" href="{{ path('account_login') }}" ><span class="fa fa-sign-in"></span> Se connecter</a>
+            <a class="nav-link" href="{{ path('account_login') }}" ><span class="fas fa-sign-in"></span> Se connecter</a>
             </li>
             {% endif %}
                 

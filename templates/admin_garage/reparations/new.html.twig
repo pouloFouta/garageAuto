@@ -1,0 +1,117 @@
+{% extends "admin_garage/base.html.twig" %}
+
+{% block title %} Enregister une réparation {% endblock %}
+
+{% form_theme form _self %}
+
+{% block body %}
+
+<div class="container">
+<h1 class="text-center"> Enregistrer une réparation </h1>
+
+
+{{ form_start(form) }}
+
+{{ form_widget(form) }}
+
+
+ <button type ="submit" class="btn btn-success"> enregistrer </button>
+
+{{ form_end(form) }}
+
+</div>
+    
+{% endblock %}
+
+
+
+{% block _admin_reparation_pannes_widget %}
+ <h4> <strong> Ajouter une ou des pannes si nécessaire </strong>  </h4>
+ {{ form_widget(form) }}
+
+ <div class="form-group">
+
+          <button type="button" id="add-panne" class ="btn btn-primary"> Ajouter une panne </button>
+</div>
+ 
+
+{% endblock %}
+
+{% block _admin_reparation_vehicule_widget %}
+ <h4> <strong> Encoder les données du véhicule</strong>  </h4>
+ {{ form_widget(form) }}
+
+
+
+
+{% endblock %}
+
+{% block _admin_reparation_widget %}
+ <h4> <strong> Encoder les données de la réparation</strong>  </h4>
+ {{ form_widget(form) }}
+
+
+
+
+{% endblock %}
+
+
+
+{% block  _admin_reparation_pannes_entry_row %}
+
+
+ {{ form_widget(form) }}
+
+{% endblock %}
+
+{% block _admin_reparation_pannes_entry_widget  %}
+
+<div class="form-group">
+<div class="row">
+   <div class="col">
+           {{ form_widget(form.motif) }}
+   </div>
+   <div class="col">
+           {{ form_widget(form.date_panne) }}
+   </div>
+   <div class="col">
+           {{ form_widget(form.est_resolu) }}
+   </div>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+<script>
+
+$('#add-panne').click(function() {
+
+  // num des champs suivants
+
+  const nbp = $('#admin_reparation_pannes div.form-group').length;
+  
+
+
+// récuperer le prototype des entrées
+
+const temp = $('#admin_reparation_pannes').data('prototype').replace(/__name__/g, nbp);
+
+//console.log(temp);
+
+// mettre le code dans la Div de la collection des pannes
+
+$('#admin_reparation_pannes').append(temp);
+
+});
+
+//console.log(temp);
+
+</script>
+
+
+
+{% endblock %}

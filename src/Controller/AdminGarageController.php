@@ -18,13 +18,6 @@ class AdminGarageController extends AbstractController
         ]);
     }
 
-    public function listesRepateurs(ReparateurRepository $reparateurRepository)
-    {
-              return $this-> render('admin_garage/reparateurs/index.html.twig' ,[
-
-                     'reparateurs' => $reparateurRepository->findAll()
-
-              ]);
-
-    }
+   
+    
 }

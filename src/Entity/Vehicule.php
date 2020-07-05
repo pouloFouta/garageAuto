@@ -55,20 +55,56 @@ class Vehicule
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="vehicules")
+     * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="vehicules", cascade={"persist"})
      */
 
     private $client;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Reparation" ,mappedBy="numeroChassis")
-     */
 
-    private $lesReparations;
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="vehicule")
+     */
+    private $locations;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Achat", mappedBy="vehicule", cascade={"persist", "remove"})
+     */
+    private $achat;
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Reparation", mappedBy="vehicule", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     */
+    private $reparations;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $nbPortes;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $transmission;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $options;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $modele;
+
+   
 
     public function __construct()
     {
-        $this->lesReparations = new ArrayCollection();
+        
+        $this->locations = new ArrayCollection();
+        $this->reparations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -172,33 +208,133 @@ class Vehicule
         return $this;
     }
 
+    
+
+   
+
     /**
-     * @return Collection|Reparation[]
+     * @return Collection|Location[]
      */
-    public function getLesReparations(): Collection
+    public function getLocations(): Collection
     {
-        return $this->lesReparations;
+        return $this->locations;
     }
 
-    public function addLesReparation(Reparation $lesReparation): self
+    public function addLocation(Location $location): self
     {
-        if (!$this->lesReparations->contains($lesReparation)) {
-            $this->lesReparations[] = $lesReparation;
-            $lesReparation->setNumeroChassis($this);
+        if (!$this->locations->contains($location)) {
+            $this->locations[] = $location;
+            $location->setVehicule($this);
         }
 
         return $this;
     }
 
-    public function removeLesReparation(Reparation $lesReparation): self
+    public function removeLocation(Location $location): self
     {
-        if ($this->lesReparations->contains($lesReparation)) {
-            $this->lesReparations->removeElement($lesReparation);
+        if ($this->locations->contains($location)) {
+            $this->locations->removeElement($location);
             // set the owning side to null (unless already changed)
-            if ($lesReparation->getNumeroChassis() === $this) {
-                $lesReparation->setNumeroChassis(null);
+            if ($location->getVehicule() === $this) {
+                $location->setVehicule(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAchat(): ?Achat
+    {
+        return $this->achat;
+    }
+
+    public function setAchat(Achat $achat): self
+    {
+        $this->achat = $achat;
+
+        // set the owning side of the relation if necessary
+        if ($achat->getVehicule() !== $this) {
+            $achat->setVehicule($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reparation[]
+     */
+    public function getReparations(): Collection
+    {
+        return $this->reparations;
+    }
+
+    public function addReparation(Reparation $reparation): self
+    {
+        if (!$this->reparations->contains($reparation)) {
+            $this->reparations[] = $reparation;
+            $reparation->setVehicule($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReparation(Reparation $reparation): self
+    {
+        if ($this->reparations->contains($reparation)) {
+            $this->reparations->removeElement($reparation);
+            // set the owning side to null (unless already changed)
+            if ($reparation->getVehicule() === $this) {
+                $reparation->setVehicule(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNbPortes(): ?int
+    {
+        return $this->nbPortes;
+    }
+
+    public function setNbPortes(int $nbPortes): self
+    {
+        $this->nbPortes = $nbPortes;
+
+        return $this;
+    }
+
+    public function getTransmission(): ?string
+    {
+        return $this->transmission;
+    }
+
+    public function setTransmission(string $transmission): self
+    {
+        $this->transmission = $transmission;
+
+        return $this;
+    }
+
+    public function getOptions(): ?string
+    {
+        return $this->options;
+    }
+
+    public function setOptions(string $options): self
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    public function getModele(): ?string
+    {
+        return $this->modele;
+    }
+
+    public function setModele(string $modele): self
+    {
+        $this->modele = $modele;
 
         return $this;
     }

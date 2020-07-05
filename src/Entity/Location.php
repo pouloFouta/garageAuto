@@ -38,6 +38,12 @@ class Location
 
     private $client;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="locations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $vehicule;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +93,18 @@ class Location
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getVehicule(): ?Vehicule
+    {
+        return $this->vehicule;
+    }
+
+    public function setVehicule(?Vehicule $vehicule): self
+    {
+        $this->vehicule = $vehicule;
 
         return $this;
     }

@@ -23,17 +23,24 @@ class Piece
      */
     private $designation;
 
+    
     /**
-     * @ORM\OneToMany(targetEntity="Commande", mappedBy="piece")
+     * @ORM\Column(type="decimal", precision=10, scale=0)
      */
+    private $prix_unitaire;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="piece")
+     */
     private $ligneCommandes;
 
     public function __construct()
     {
         $this->ligneCommandes = new ArrayCollection();
     }
+
+   
+   
 
     public function getId(): ?int
     {
@@ -52,15 +59,29 @@ class Piece
         return $this;
     }
 
+   
+
+    public function getPrixUnitaire(): ?string
+    {
+        return $this->prix_unitaire;
+    }
+
+    public function setPrixUnitaire(string $prix_unitaire): self
+    {
+        $this->prix_unitaire = $prix_unitaire;
+
+        return $this;
+    }
+
     /**
-     * @return Collection|Commande[]
+     * @return Collection|LigneCommande[]
      */
     public function getLigneCommandes(): Collection
     {
         return $this->ligneCommandes;
     }
 
-    public function addLigneCommande(Commande $ligneCommande): self
+    public function addLigneCommande(LigneCommande $ligneCommande): self
     {
         if (!$this->ligneCommandes->contains($ligneCommande)) {
             $this->ligneCommandes[] = $ligneCommande;
@@ -70,7 +91,7 @@ class Piece
         return $this;
     }
 
-    public function removeLigneCommande(Commande $ligneCommande): self
+    public function removeLigneCommande(LigneCommande $ligneCommande): self
     {
         if ($this->ligneCommandes->contains($ligneCommande)) {
             $this->ligneCommandes->removeElement($ligneCommande);
@@ -82,4 +103,6 @@ class Piece
 
         return $this;
     }
+
+   
 }

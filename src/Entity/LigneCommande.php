@@ -17,30 +17,26 @@ class LigneCommande
     private $id;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="integer")
      */
     private $quantite;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
-    private $prix_unitaire;
-
+    private $prix_ligne;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Commande", inversedBy="ligneCommandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Commande", inversedBy="ligneCommandes")
+     * @ORM\JoinColumn(nullable=false)
      */
-
     private $commande;
 
-
     /**
-     * @ORM\ManyToOne(targetEntity="Piece", inversedBy="ligneCommandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Piece", inversedBy="ligneCommandes")
+     * @ORM\JoinColumn(nullable=false)
      */
-
     private $piece;
-
-
 
     public function getId(): ?int
     {
@@ -59,14 +55,14 @@ class LigneCommande
         return $this;
     }
 
-    public function getPrixUnitaire()
+    public function getPrixLigne(): ?string
     {
-        return $this->prix_unitaire;
+        return $this->prix_ligne;
     }
 
-    public function setPrixUnitaire($prix_unitaire): self
+    public function setPrixLigne(string $prix_ligne): self
     {
-        $this->prix_unitaire = $prix_unitaire;
+        $this->prix_ligne = $prix_ligne;
 
         return $this;
     }

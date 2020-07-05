@@ -1,0 +1,52 @@
+{% extends 'admin_garage/base.html.twig' %}
+
+{% block title %}Gestion des réparateurs!{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+<h1 class="my-5"> Gestion des réparateurs </h1>
+
+<table class="table table-hover">
+<thead>
+    <tr>
+        <th> Id</th>
+        <th> Nom</th>
+        <th> Prénom</th>
+        <th> Email</th>
+        <th> Spécialité</th>
+        <th> Adresse</th>
+        <th> Actions</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for reparateur in reparateurs %}
+      
+<tr>
+    <td>{{ reparateur.id }}</td>
+    <td>{{  reparateur.nom }}</td>
+    <td>{{ reparateur.prenom }}</td>
+    <td>{{  reparateur.email }}</td>
+    <td>{{ reparateur.specialite|length}}</td>
+      
+    <td>{{  reparateur.adresse }}</td>
+    <td>
+    {#<a href="{{ path('admin_reparateur_edit', {'id': reparateur.id }) }}" class="btn btn-primary"> <i class="fas fa-edit"> </i> </a>
+    <a href="{{ path('admin_reparateur_delete', {'id': reparateur.id }) }}" class="btn btn-danger"> <i class="fas fa-trash"> </i> </a>#}
+  
+   </td>
+   
+</tr>
+
+
+{% endfor %}
+</tbody>
+
+</table>
+
+
+</div>
+
+<a href="{{ path('admin_reparateur_create') }} "> <button class="btn-success ml-5 ">  Ajouter un réparateur  </button> </a> 
+{% endblock %}

@@ -46,11 +46,16 @@ class Client extends Personne
     private $achats;
 
 
-    /**
-     * @ORM\ManyToMany(targetEntity="BonReparation" ,inversedBy="bons")
-     * @ORM\JoinTable(name="clients_bons")
-     */
+    
 
+    /**
+     * @ORM\Column(type="integer",nullable=true)
+     */
+    private $points_bonus;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Bon", mappedBy="client")
+     */
     private $bons;
 
 
@@ -63,6 +68,7 @@ class Client extends Personne
         $this->locations = new ArrayCollection();
         $this->achats = new ArrayCollection();
         $this->bons = new ArrayCollection();
+       
     }
 
 
@@ -177,27 +183,46 @@ class Client extends Personne
         return $this;
     }
 
+   
+
+    public function getPointsBonus(): ?int
+    {
+        return $this->points_bonus;
+    }
+
+    public function setPointsBonus(int $points_bonus): self
+    {
+        $this->points_bonus = $points_bonus;
+
+        return $this;
+    }
+
     /**
-     * @return Collection|BonReparation[]
+     * @return Collection|Bon[]
      */
     public function getBons(): Collection
     {
         return $this->bons;
     }
 
-    public function addBon(BonReparation $bon): self
+    public function addBon(Bon $bon): self
     {
         if (!$this->bons->contains($bon)) {
             $this->bons[] = $bon;
+            $bon->setClient($this);
         }
 
         return $this;
     }
 
-    public function removeBon(BonReparation $bon): self
+    public function removeBon(Bon $bon): self
     {
         if ($this->bons->contains($bon)) {
             $this->bons->removeElement($bon);
+            // set the owning side to null (unless already changed)
+            if ($bon->getClient() === $this) {
+                $bon->setClient(null);
+            }
         }
 
         return $this;

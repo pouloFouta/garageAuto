@@ -19,68 +19,87 @@ class Reparateur extends Personne
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Specialite", inversedBy="reparateurs")
      */
     private $specialite;
 
     /**
-     * @ORM\OneToMany(targetEntity="ReparateurReparation", mappedBy="reparateur")
+     * @ORM\OneToMany(targetEntity="App\Entity\GestionVehicule", mappedBy="reparateur")
      */
+    private $gestionVehicules;
 
+    
 
-    private $reparateurReparations;
-
-
+   
     public function __construct()
     {
-        $this->reparateurReparations = new ArrayCollection();
-    }
+        
+        $this->specialite = new ArrayCollection();
+        $this->gestionVehicules = new ArrayCollection();    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSpecialite(): ?string
+    /**
+     * @return Collection|Specialite[]
+     */
+    public function getSpecialite(): Collection
     {
         return $this->specialite;
     }
 
-    public function setSpecialite(string $specialite): self
+    public function addSpecialite(Specialite $specialite): self
     {
-        $this->specialite = $specialite;
+        if (!$this->specialite->contains($specialite)) {
+            $this->specialite[] = $specialite;
+        }
+
+        return $this;
+    }
+
+    public function removeSpecialite(Specialite $specialite): self
+    {
+        if ($this->specialite->contains($specialite)) {
+            $this->specialite->removeElement($specialite);
+        }
 
         return $this;
     }
 
     /**
-     * @return Collection|ReparateurReparation[]
+     * @return Collection|GestionVehicule[]
      */
-    public function getReparateurReparations(): Collection
+    public function getGestionVehicules(): Collection
     {
-        return $this->reparateurReparations;
+        return $this->gestionVehicules;
     }
 
-    public function addReparateurReparation(ReparateurReparation $reparateurReparation): self
+    public function addGestionVehicule(GestionVehicule $gestionVehicule): self
     {
-        if (!$this->reparateurReparations->contains($reparateurReparation)) {
-            $this->reparateurReparations[] = $reparateurReparation;
-            $reparateurReparation->setReparateur($this);
+        if (!$this->gestionVehicules->contains($gestionVehicule)) {
+            $this->gestionVehicules[] = $gestionVehicule;
+            $gestionVehicule->setReparateur($this);
         }
 
         return $this;
     }
 
-    public function removeReparateurReparation(ReparateurReparation $reparateurReparation): self
+    public function removeGestionVehicule(GestionVehicule $gestionVehicule): self
     {
-        if ($this->reparateurReparations->contains($reparateurReparation)) {
-            $this->reparateurReparations->removeElement($reparateurReparation);
+        if ($this->gestionVehicules->contains($gestionVehicule)) {
+            $this->gestionVehicules->removeElement($gestionVehicule);
             // set the owning side to null (unless already changed)
-            if ($reparateurReparation->getReparateur() === $this) {
-                $reparateurReparation->setReparateur(null);
+            if ($gestionVehicule->getReparateur() === $this) {
+                $gestionVehicule->setReparateur(null);
             }
         }
 
         return $this;
     }
+
+    
+
+   
 }

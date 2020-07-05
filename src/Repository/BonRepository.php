@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\BonReparation;
+use App\Entity\Bon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -12,11 +12,11 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method BonReparation[]    findAll()
  * @method BonReparation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class BonReparationRepository extends ServiceEntityRepository
+class BonRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, BonReparation::class);
+        parent::__construct($registry, Bon::class);
     }
 
     // /**
