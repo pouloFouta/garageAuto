@@ -31,10 +31,14 @@ class Panne
     /**
      * @ORM\Column(type="boolean")
      */
+
     private $est_resolu;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Reparation", inversedBy="pannes")
+     * 
+     * ceci pour supprimer en cascade toutes la réparation et les pannes associées  
+     *  @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $reparation;
 

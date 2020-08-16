@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReparationRepository")
@@ -20,6 +21,7 @@ class Reparation
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank (message=" vous devez indiquer ce champ")
      */
     private $description;
 
@@ -30,6 +32,7 @@ class Reparation
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\GreaterThanOrEqual("today")
      */
     private $date_sortie;
 
@@ -70,11 +73,14 @@ class Reparation
      * @ORM\OneToMany(targetEntity="ReparateurReparation" ,mappedBy="reparation")
      */
 
-     
+     // private $reparateur;
 
     /** 
     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="reparations")
-    * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+    * @ORM\JoinColumn(nullable=false)
+    * @ORM\JoinColumn(onDelete="CASCADE")
+    * @Assert\Valid
+
     */
    private $vehicule;
 
@@ -82,6 +88,7 @@ class Reparation
    
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Panne", mappedBy="reparation")
+     *
      */
     private $pannes;
 

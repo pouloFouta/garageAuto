@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\Achat;
+use App\Entity\Vente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Achat|null find($id, $lockMode = null, $lockVersion = null)
- * @method Achat|null findOneBy(array $criteria, array $orderBy = null)
- * @method Achat[]    findAll()
- * @method Achat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Vente|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Vente|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Vente[]    findAll()
+ * @method Vente[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AchatRepository extends ServiceEntityRepository
+class VenteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Achat::class);
+        parent::__construct($registry, Vente::class);
     }
 
     // /**
-    //  * @return Achat[] Returns an array of Achat objects
+    //  * @return Vente[] Returns an array of Vente objects
     //  */
     /*
     public function findByExampleField($value)

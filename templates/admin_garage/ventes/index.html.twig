@@ -1,0 +1,78 @@
+{% extends 'admin_garage/base.html.twig' %}
+
+{% block title %} les ventes  {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+		<h1 class="my-5">
+			Gestion des ventes</h1>
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>
+						Id</th>
+					<th>
+						vehicule</th>
+					
+					<th>
+						image</th>
+					<th>
+						statut</th>
+					<th>
+						prix</th>
+					
+
+
+					<th>
+						Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for vente in ventes %}
+
+					<tr>
+						<td>{{ vente.id }}</td>
+						<td>{{ vente.vehicule.marque }} {{ vente.vehicule.modele }}  </td>
+						 {# on va chercher l'image du véhicule depuis le dossier oploads et grâce à la balise src en html 
+						    on peut afficher l'image .
+							la DB stocke juste le nom de l'image
+						  #}
+						<td><img src="/uploads/{{ vente.vehicule.imageVehicule }}" </td>
+						<td>{{ vente.statutVente }}</td>
+						<td>{{ vente.montant ~ '€' }}</td>
+						
+						
+
+
+						<td>
+							<a href="{{ path('admin_ventes_edit', {'id': vente.id}) }}" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('admin_ventes_delete', {'id': vente.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+
+						</td>
+
+					</tr>
+
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+
+	</div>
+
+	<a href="{{path('admin_ventes_create')}}">
+		<button class="btn-success ml-5 ">
+			Enregistrer une vente
+		</button>
+	</a>
+{% endblock %}
+
+

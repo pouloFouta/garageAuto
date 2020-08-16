@@ -2,12 +2,20 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Vente;
+use DateTimeInterface;
+use App\Entity\ImageVehicule;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VehiculeRepository")
+ * @ORM\Entity
+ * @UniqueEntity("numero_chassis")
  */
 class Vehicule
 {
@@ -16,15 +24,20 @@ class Vehicule
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
+     
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=17, unique=true)
+     * @ORM\Column(type="string", length = 17)
+     * 
      */
+   
     private $numero_chassis;
-
+      
     /**
-     * @ORM\Column(type="string", length=9)
+     * @ORM\Column(type="string", length=9,nullable=true)
+     * 
+     * 
      */
     private $immatriculation;
 
@@ -44,18 +57,31 @@ class Vehicule
     private $carburant;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
+     * @Assert\Range(min=0,
+     * max=600000,
+     * minMessage="le nombre de km  doit être d'au moins 0",
+     * maxMessage ="le nombre de km ne doit pas dépasser 600000")
+     * @Assert\LessThanOrEqual(propertyPath="kilometrage_actuel", message="le kilométrage achat doit être inférieur ou égal au kilométrage actuel")
      */
     private $kilometrage_achat;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Range(min=0,
+     * max=600000,
+     * minMessage="le nombre de km  doit être d'au moins 0",
+     * maxMessage ="le nombre de km ne doit pas dépasser 600000")
+     * @Assert\GreaterThanOrEqual(propertyPath="kilometrage_achat",message="le kilométrage actuel doit être supérieur ou égal au kilométrage achat")
+     * 
      */
     private $kilometrage_actuel;
 
 
     /**
      * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="vehicules", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     * @Assert\Valid
      */
 
     private $client;
@@ -67,14 +93,14 @@ class Vehicule
     private $locations;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Achat", mappedBy="vehicule", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Vente", mappedBy="vehicule", cascade={"persist", "remove"})
      */
-    private $achat;
+    private $vente;
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Reparation", mappedBy="vehicule", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
+     * @ORM\OneToMany(targetEntity="App\Entity\Reparation", mappedBy="vehicule")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $reparations;
 
@@ -98,6 +124,28 @@ class Vehicule
      */
     private $modele;
 
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\Range(min=30,
+     * max=400,
+     * minMessage="le nombre de chevaux doit être une valeur positive et d'au moins 30 cv",
+     * maxMessage ="le nombre de chevaux doit être une valeur positive  et ne doit pas dépasser 400 cv"
+     * )
+     */
+
+    private $puissance;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $anneeFabrication;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $imageVehicule;
+
+    
    
 
     public function __construct()
@@ -243,18 +291,18 @@ class Vehicule
         return $this;
     }
 
-    public function getAchat(): ?Achat
+    public function getVente(): ?Vente
     {
-        return $this->achat;
+        return $this->vente;
     }
 
-    public function setAchat(Achat $achat): self
+    public function setVente(Vente $vente): self
     {
-        $this->achat = $achat;
+        $this->vente = $vente;
 
         // set the owning side of the relation if necessary
-        if ($achat->getVehicule() !== $this) {
-            $achat->setVehicule($this);
+        if ($vente->getVehicule() !== $this) {
+            $vente->setVehicule($this);
         }
 
         return $this;
@@ -338,4 +386,43 @@ class Vehicule
 
         return $this;
     }
+
+
+    
+    public function getPuissance(): ?int
+    {
+        return $this->puissance;
+    }
+
+    public function setPuissance(int $puissance): self
+    {
+        $this->puissance = $puissance;
+
+        return $this;
+    }
+
+    public function getAnneeFabrication(): ?\DateTimeInterface
+    {
+        return $this->anneeFabrication;
+    }
+
+    public function setAnneeFabrication(\DateTimeInterface $anneeFabrication): self
+    {
+        $this->anneeFabrication = $anneeFabrication;
+
+        return $this;
+    }
+
+    public function getImageVehicule(): ?string
+    {
+        return $this->imageVehicule;
+    }
+
+    public function setImageVehicule(?string $imageVehicule): self
+    {
+        $this->imageVehicule = $imageVehicule;
+
+        return $this;
+    }
+
 }

@@ -1,58 +1,72 @@
 {% extends 'admin_garage/base.html.twig' %}
 
-{% block title %}Gestion des réparations!{% endblock %}
+{% block title %}Gestion des réparations!
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+	<div class="container-fluid">
 
-<h1 class="my-5"> Gestion des réparations</h1>
+		<h1 class="my-5">
+			Gestion des réparations</h1>
 
-<table class="table table-hover">
-<thead>
-    <tr>
-        <th> Id</th>
-         <th> vehicule</th>
-         <th> description</th>
-         <th> date entrée</th>
-        <th> date sortie</th>
-        <th> statut</th>
-       
-        
-        
-        
-        <th> Actions</th>
-    </tr>
-</thead>
-
-<tbody>
-{% for reparation in reparations %}
-      
-<tr>
-    <td>{{ reparation.id }}</td>
-    <td>{{ reparation.vehicule.immatriculation }}</td>
-     <td>{{  reparation.description }}</td>
-    <td>{{ reparation.DateEntree|date("d/m/Y") }}</td>
-    <td>{{  reparation.DateSortie|date("d/m/Y") }}</td>
-    <td>{{ reparation.statut }}</td>
-    
-    
-    
-    <td>
-    <a href="{{ path('admin_reparation_edit', {'id': reparation.id}) }}" class="btn btn-primary"> <i class="fas fa-edit"> </i> </a>
-    <a href="{{ path('admin_reparation_delete', {'id': reparation.id}) }}" class="btn btn-danger"> <i class="fas fa-trash"> </i> </a>
-  
-   </td>
-   
-</tr>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>
+						Id</th>
+					<th>
+						vehicule</th>
+					<th>
+						description</th>
+					<th>
+						date entrée</th>
+					<th>
+						date sortie</th>
+					<th>
+						statut</th>
 
 
-{% endfor %}
-</tbody>
+					<th>
+						Actions</th>
+				</tr>
+			</thead>
 
-</table>
+			<tbody>
+				{% for reparation in reparations %}
+
+					<tr>
+						<td>{{ reparation.id }}</td>
+						<td>{{ reparation.vehicule.immatriculation }}</td>
+						<td>{{  reparation.description }}</td>
+						<td>{{ reparation.DateEntree|date("d/m/Y") }}</td>
+						<td>{{  reparation.DateSortie|date("d/m/Y") }}</td>
+						<td>{{ reparation.statut }}</td>
 
 
-</div>
+						<td>
+							<a href="{{ path('admin_reparation_edit', {'id': reparation.id}) }}" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{{ path('admin_reparation_delete', {'id': reparation.id}) }}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
 
-<a href="{{path('admin_reparation_create')}}"> <button class="btn-success ml-5 ">  Enregistrer une réparation  </button> </a> 
+						</td>
+
+					</tr>
+
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+
+	</div>
+
+	<a href="{{path('admin_reparation_create')}}">
+		<button class="btn-success ml-5 ">
+			Enregistrer une réparation
+		</button>
+	</a>
 {% endblock %}

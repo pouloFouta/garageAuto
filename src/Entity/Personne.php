@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonneRepository")
@@ -18,7 +21,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *   "Client" = "Client",
  *   "Reparateur" = "Reparateur",
  * })
+ * 
+ * @UniqueEntity(
+ * fields ={"email"},
+ * message = "un utilisateur est dejà inscrit avec cet email, merci de la modifier"
+ * )
+ * 
  */
+ 
 class Personne  
 
 
@@ -36,11 +46,12 @@ implementer les methodes associes
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+    
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
@@ -51,6 +62,7 @@ implementer les methodes associes
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Assert\Email(message="entrer une adresse mail valide")
      */
     private $email;
 
@@ -61,6 +73,7 @@ implementer les methodes associes
 
     /**
      * @ORM\Column(type="string", length=20)
+     
      */
     private $telephone;
 

@@ -21,7 +21,9 @@ class AdminPanneType extends AbstractType
                 'data' => new DateTime(),
                 
             ])
-            ->add('est_resolu');
+            ->add('est_resolu',null,[
+                'label' => ' est résolu'
+            ]);
             
            
         

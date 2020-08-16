@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Vente;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
@@ -40,7 +41,7 @@ class Client extends Personne
     private $locations;
 
     /**
-     * @ORM\OneToMany(targetEntity="Achat" ,mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Vente" ,mappedBy="client")
      */
 
     private $achats;
@@ -160,7 +161,7 @@ class Client extends Personne
         return $this->achats;
     }
 
-    public function addAchat(Achat $achat): self
+    public function addAchat(Vente $achat): self
     {
         if (!$this->achats->contains($achat)) {
             $this->achats[] = $achat;
@@ -170,7 +171,7 @@ class Client extends Personne
         return $this;
     }
 
-    public function removeAchat(Achat $achat): self
+    public function removeAchat(Vente $achat): self
     {
         if ($this->achats->contains($achat)) {
             $this->achats->removeElement($achat);

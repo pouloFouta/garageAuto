@@ -43,7 +43,8 @@ class AdminReparationType extends AbstractType
             ])
             ->add('statut',ChoiceType::class, [
                 'choices' => [
-                    'en cours' => 'en cours',
+                    'enregistré' => 'enregistré',
+                    'en cours' => 'en cours de réparation',
                     'en attente de pièces' => 'en attente de pièces',
                     'terminé' =>'terminé']]);
             
@@ -55,8 +56,10 @@ class AdminReparationType extends AbstractType
                 [
                 'label' => false,    
                 'entry_type' => AdminPanneType::class,
+                'prototype' => true,
                 'allow_add' => true,
-                'prototype' => true
+                'allow_delete' => true
+               
                 
               
                 ]);

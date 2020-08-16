@@ -2,23 +2,25 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Panne;
+use App\Entity\Client;
+use App\Entity\Personne;
 use App\Entity\Vehicule;
 use App\Entity\Reparation;
 use App\Form\AdminReparationType;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminReparationsController extends AbstractController
 {
     /**
      * @Route("/admin/reparations", name="admin_reparations_index")
      * 
-     *  * @return Reparation[] Returns an array of Reparation objects
+     *   @return Reparation[] Returns an array of Reparation objects
      */
     public function index()
     {
@@ -28,7 +30,7 @@ class AdminReparationsController extends AbstractController
 
             dump($reparations);
         return $this->render('admin_garage/reparations/index.html.twig', [
-            'reparations' => $reparations,
+            'reparations' => $reparations
         ]);
     }
        
@@ -46,21 +48,13 @@ class AdminReparationsController extends AbstractController
 
        
         $reparation= new Reparation();
-        
-        
-         /*$panne1= new Panne ();
-         
-        $panne1->setMotif('bruit roues avant');
-        $panne1->setDatePanne(new DateTime());
-        $panne1->setEstResolu(0);
 
-        $panne2= new Panne();
-              $panne2->setMotif('bruit roues arrières');
-              $panne2->setDatePanne(new DateTime());
-              $panne1->setEstResolu(0);
-        $reparation->addPanne($panne1);
-        $reparation->addPanne($panne2);*/
-                   
+        $ve = new Vehicule();
+
+        $client = new Client();
+        
+        
+    
        
 
         $form = $this->createForm(AdminReparationType::class, $reparation);
@@ -72,10 +66,10 @@ class AdminReparationsController extends AbstractController
         if ($form->isSubmitted()&& $form->isValid()) 
         {
 
-            // récupération de toutes les pannes depuis l'entité reparation
+            // récuperation de toutes les pannes depuis l'entité reparation
             $lesPannes= $reparation->getPannes();
 
-            dump ($lesPannes);
+           // dump ($lesPannes);
             
  
             foreach ($lesPannes as $unePanne)
@@ -87,18 +81,36 @@ class AdminReparationsController extends AbstractController
            
             // on recupère le vehicule avec ses valeurs depuis l'entité reparation 
             $ve = $reparation->getVehicule();
-            dump($ve);
+           
+            
+            
+            //on récupère le client depuis le véhicule et on le persiste 
+
+            $client = $ve->getClient();
+            $manager->persist($client);
+    
+      
+            $manager->persist($client);
             // on persiste le véhicule dans la table vehicule et après on persiste la réparation
             $manager->persist($ve);
+
+             dump($reparation);
+           
             
 
             $manager->persist($reparation);
             
-            //$manager->persist($panne);
-            //$manager->persist($panne2);
+           
             
             
             $manager->flush();
+
+            $this->addFlash(
+                'success',
+     
+                "La réparation  a été ajouté "
+            
+            );
 
   
 
@@ -127,6 +139,8 @@ class AdminReparationsController extends AbstractController
 
            $form->handleRequest($request);
 
+        
+
            if($form->isSubmitted() && $form->isValid())
            {
 
@@ -146,12 +160,20 @@ class AdminReparationsController extends AbstractController
             $ve = $reparation->getVehicule();
            
             // on persiste le véhicule dans la table vehicule et après on persiste la réparation
-            $manager->persist($ve);
             
+            
+            //on récupère le client depuis le véhicule
+
+             $client = $ve->getClient();
+             $manager->persist($client);
+             $manager->persist($ve);
 
             $manager->persist($reparation);
+            dump($reparation);
             
                $manager->flush();
+
+               return $this->redirectToRoute('admin_reparations_index');
 
                $this->addFlash(
                    
@@ -185,15 +207,29 @@ class AdminReparationsController extends AbstractController
 
     public function delete (Reparation $reparation, EntityManagerInterface $manager ) {
 
-       $manager->remove($reparation);
-       $manager->flush();
+        if ($reparation->getStatut() =="enregistré")
+        {
 
-       $this->addFlash(
-           'success',
+            $manager->remove($reparation);
+            $manager->flush();
+     
+            $this->addFlash(
+                'success',
+     
+                "La réparation  a été supprimé "
+            
+            );
+        }
 
-           "La réparation  <strong> {$reparation->getId()} </strong>  a été supprimé "
-       
-       );
+      else
+        {
+            $this->addFlash(
+                'warning',
+     
+                'La réparation doit être conservé ' 
+            
+            );
+        }
 
             return $this->redirectToRoute('admin_reparations_index');
 

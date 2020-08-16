@@ -1,0 +1,39 @@
+{%  extends 'admin_garage/base.html.twig'  %}
+
+{% block title %}Modifier  une vente{% endblock %}
+
+
+{% form_theme form _self %}
+
+{% block body %}
+
+<div class="container">
+
+<h1 class ="text-center"> Enregistrer une  vente </h1>
+
+{{ form_start(form) }}
+
+{{form_row(form.montant)}}
+{{form_row(form.statutVente)}}
+{{form_row(form.vehicule.numero_chassis)}}
+{{form_row(form.vehicule.marque)}}
+{{form_row(form.vehicule.modele)}}
+{{form_row(form.vehicule.anneeFabrication)}}
+{{form_row(form.vehicule.couleur)}}
+{{form_row(form.vehicule.carburant)}}
+{{form_row(form.vehicule.kilometrage_actuel)}}
+{{form_row(form.vehicule.nbPortes)}}
+{{form_row(form.vehicule.transmission)}}
+{{form_row(form.vehicule.puissance)}}
+{{form_row(form.vehicule.options)}}
+
+
+ {{form_row(form.vehicule.imageFichier)}}
+
+ <button type ="submit" class="btn btn-success"> mettre à jour  </button>
+
+{{ form_end(form) }}
+
+</div>
+    
+{% endblock %}

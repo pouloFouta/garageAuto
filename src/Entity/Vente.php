@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Vehicule;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AchatRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\VenteRepository")
  */
-class Achat
+class Vente
 {
     /**
      * @ORM\Id()
@@ -17,9 +19,9 @@ class Achat
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",nullable=true)
      */
-    private $date_achat;
+    private $date_vente;
 
     /**
      * @ORM\Column(type="decimal", precision=10, scale=0)
@@ -33,24 +35,30 @@ class Achat
     private $client;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Vehicule", inversedBy="achat", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Vehicule", inversedBy="vente", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private $vehicule;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statutVente;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDateAchat(): ?\DateTimeInterface
+    public function getDateVente(): ?\DateTimeInterface
     {
-        return $this->date_achat;
+        return $this->date_vente;
     }
 
-    public function setDateAchat(\DateTimeInterface $date_achat): self
+    public function setDateVente(\DateTimeInterface $date_vente): self
     {
-        $this->date_achat = $date_achat;
+        $this->date_vente = $date_vente;
 
         return $this;
     }
@@ -87,6 +95,18 @@ class Achat
     public function setVehicule(Vehicule $vehicule): self
     {
         $this->vehicule = $vehicule;
+
+        return $this;
+    }
+
+    public function getStatutVente(): ?string
+    {
+        return $this->statutVente;
+    }
+
+    public function setStatutVente(string $statutVente): self
+    {
+        $this->statutVente = $statutVente;
 
         return $this;
     }

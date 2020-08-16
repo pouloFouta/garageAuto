@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} listes des véhicules à vendre !{% endblock %}
+
+{% block body %}
+   <h1> listes des véhicules à vendre </h1>
+{% for vente in ventes %}
+
+<div class="class container">
+<div class=" row">
+<div class="col-md-4">
+ <div class="card bg-light mb-3">
+ <div class="card-header text-center">
+ une Toyota <strong> 6000&euros</strong> <br>
+ <small> libre </small>
+ 
+ 
+ </div>
+
+ <img src="/uploads/{{ vente.vehicule.imageVehicule }}" alt="une image" 
+ 
+ style="height: 200px; width: 100%; display:block">
+
+ <div class="card-body">
+ <h4 class="card-title">
+ belle voiture!
+ </h4>
+<p class="card-text">  Details du véhicule</p>
+<a href="#" class="btn btn-secondary"> acheter</a>
+ 
+ </div>
+ 
+ 
+ 
+ </div>
+
+
+</div>   
+
+{% endfor %}
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}

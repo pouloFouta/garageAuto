@@ -42,8 +42,11 @@
  <h4> <strong> Encoder les données du véhicule</strong>  </h4>
  {{ form_widget(form) }}
 
+{% endblock %}
 
-
+{% block _admin_reparation_vehicule_client_widget %}
+ <h4> <strong> Encoder les données du client</strong>  </h4>
+ {{ form_widget(form) }}
 
 {% endblock %}
 
@@ -67,50 +70,83 @@
 
 {% block _admin_reparation_pannes_entry_widget  %}
 
-<div class="form-group">
-<div class="row">
-   <div class="col">
-           {{ form_widget(form.motif) }}
-   </div>
-   <div class="col">
-           {{ form_widget(form.date_panne) }}
-   </div>
-   <div class="col">
-           {{ form_widget(form.est_resolu) }}
-   </div>
+<div class="form-group" id="block_{{id}}">
 
-</div>
-</div>
+		<div class="row">
+
+			<div class="col-10">
+				<div class="row">
+					<div class="col">
+						{{ form_widget(form.motif) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.date_panne) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.est_resolu) }}
+					</div>
+
+				</div>
+
+			</div>
+			<div  class="col-2">
+				<button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+
+
+			</div>
+		</div>
+
+	</div>
 
 {% endblock %}
 
 {% block javascripts %}
 
 
-<script>
+	<script>
 
-$('#add-panne').click(function() {
+		$('#add-panne').click(function () { 
+                        
+                        // num des champs suivants
 
-  // num des champs suivants
-
-  const nbp = $('#admin_reparation_pannes div.form-group').length;
-  
+const nbp = $('#admin_reparation_pannes div.form-group').length;
 
 
 // récuperer le prototype des entrées
 
 const temp = $('#admin_reparation_pannes').data('prototype').replace(/__name__/g, nbp);
 
-//console.log(temp);
+// console.log(temp);
 
 // mettre le code dans la Div de la collection des pannes
 
 $('#admin_reparation_pannes').append(temp);
 
+ // Appel de la fonction pour supprimer une panne si possible à chaque affichage du formulaire
+gererButton();
+
 });
 
-//console.log(temp);
+// console.log(temp);
 
-</script>
+function gererButton() {
+
+$('button[data-action="delete"]').click(function () {
+
+const cible = this.dataset.target;
+
+console.log(cible);
+
+$(cible).remove();
+
+});
+
+
+}
+
+// appel de la fonction également pour l'édition du du formulaire
+gererButton();
+	</script>
+
 
 {% endblock %}
