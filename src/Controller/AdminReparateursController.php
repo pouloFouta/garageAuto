@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Role;
 use App\Entity\Personne;
 use App\Entity\Reparateur;
+use App\Entity\Specialite;
 use App\Form\PersonneType;
 use App\Form\ReparateurType;
 use Doctrine\ORM\EntityManager;
 use App\Form\AdminReparateurType;
+use App\Repository\UserRepository;
 use App\Repository\PersonneRepository;
 use App\Repository\ReparateurRepository;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -71,14 +73,31 @@ class AdminReparateursController extends AbstractController
     public function create ( Request $request, EntityManagerInterface $manager) {
 
         $reparateur= new Reparateur();
+        //$role = new Role ('ROLE_USER');
+
 
         $form = $this->createForm(AdminReparateurType::class, $reparateur);
 
         $form->handleRequest($request);
+        $lesSpec =[];
+        //$lesRol =[];
+    
 
-        if ($form->isSubmitted()&& $form->isValid()) 
-        {
 
+        if ($form->isSubmitted()&& $form->isValid())
+        { 
+            //$lesRol =$reparateur->getRoles();
+
+            $lesSpec =$reparateur->getSpecialite();
+
+
+            foreach ($lesSpec as $uneSpec)
+
+            {
+                $reparateur->addSpecialite($uneSpec);
+                $manager->persist($uneSpec);
+            }
+            
             $manager->persist($reparateur);
             $manager->flush();
 
@@ -98,7 +117,7 @@ class AdminReparateursController extends AbstractController
     /**
      * Pour éditer-modifier un réparateur
      * 
-     * @Route("admin/reparateurs/{id}/edit", name="admin_reparateur_edit")
+     * @Route("admin/reparateurs/{nom}/edit", name="admin_reparateur_edit")
      * 
      * @return Response
      */
@@ -129,7 +148,7 @@ class AdminReparateursController extends AbstractController
               $this->addFlash(
                  
                  'success',
-                 'les données du réparateur {$reparateur->getId()} ont été modifiées ! '
+                 'les données du réparateur  ont été modifiées ! '
 
               );
 
@@ -148,7 +167,7 @@ class AdminReparateursController extends AbstractController
   /**
    * Permet de supprimer un commentaire 
    * 
-   * @Route("admin/reparateurs/{id}/delete" , name="admin_reparateur_delete")
+   * @Route("admin/reparateurs/{nom}/delete" , name="admin_reparateur_delete")
    * 
    * 
    * @return  Response
@@ -162,7 +181,7 @@ class AdminReparateursController extends AbstractController
             // envoie la requête de suppression dans la DB (confirmation)
             $manager->flush();
 
-            $this->addFlash('success', 'le reparateur a été supprimé');
+            $this->addFlash('success', 'le réparateur a été supprimé');
 
             return $this->redirectToRoute('admin_reparateurs_index');
 

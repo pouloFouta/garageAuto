@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use DateTime;
+use DateTimeZone;
 use App\Entity\Reparation;
 use App\Form\AdminPanneType;
 use App\Form\AdminVehiculeType;
@@ -26,7 +27,7 @@ class AdminReparationType extends AbstractType
             ->add('date_entree',null,[
                 'label' => 'Date entrée',
                 'widget' => 'single_text',
-                'data' => new DateTime(),
+                'data' => new DateTime('now', new DateTimeZone('Europe/Brussels')),
                 
                 
 
@@ -35,9 +36,11 @@ class AdminReparationType extends AbstractType
             ->add('date_sortie',null,[
                 'label' => 'Date sortie',
                 'widget' => 'single_text',
-                'data' => new DateTime(),
-                
-                
+                // je dis ici que la date de sortie estimé est d'1 semaine mais peut-être modifiable
+                // par la suite via le bouton édit de cette réparation
+                'data' => new DateTime('+ 1 week', new DateTimeZone('Europe/Brussels'))
+                //'empty_data' => 'indeterminé',
+                //'required'   => false
                 
 
             ])

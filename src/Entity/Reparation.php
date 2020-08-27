@@ -26,12 +26,12 @@ class Reparation
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime" )
      */
     private $date_entree;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true )
      * @Assert\GreaterThanOrEqual("today")
      */
     private $date_sortie;

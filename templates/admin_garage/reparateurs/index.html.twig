@@ -28,18 +28,24 @@
     <td>{{  reparateur.nom }}</td>
     <td>{{ reparateur.prenom }}</td>
     <td>{{  reparateur.email }}</td>
-    <td>{{ reparateur.specialite|length}}</td>
-      
+    <td>  
+   <ul>
+    {% for spec in reparateur.specialite  %}
+        <li>{{ spec }}</li>
+    {% endfor %}
+</ul>
+           
+    </td>
     <td>{{  reparateur.adresse }}</td>
     <td>
-    {#<a href="{{ path('admin_reparateur_edit', {'id': reparateur.id }) }}" class="btn btn-primary"> <i class="fas fa-edit"> </i> </a>
-    <a href="{{ path('admin_reparateur_delete', {'id': reparateur.id }) }}" class="btn btn-danger"> <i class="fas fa-trash"> </i> </a>#}
+    <a href="{{ path('admin_reparateur_edit', {'nom': reparateur.nom}) }}" class="btn btn-primary"> <i class="fas fa-edit"> </i> </a>
+    <a href="{{ path('admin_reparateur_delete', {'nom': reparateur.nom}) }}" class="btn btn-danger"> <i class="fas fa-trash"> </i> </a>
   
    </td>
    
 </tr>
 
-
+ 
 {% endfor %}
 </tbody>
 

@@ -2,20 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\PasswordUpdate;
+use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\Client;
+use App\Entity\Personne;
 use App\Form\AccountType;
-use App\Form\PasswordUpdateType;
+use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManager;
+use App\Form\PasswordUpdateType;
+use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormError;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AccountController extends AbstractController
 {
@@ -58,7 +61,8 @@ class AccountController extends AbstractController
      */
     public function register (Request $request, EntityManagerInterface  $manager, UserPasswordEncoderInterface $encoder ) 
     {
-         $user = new User();
+        //$lesPersonnes =[];
+        $user = new User();
          
          $form = $this->createForm(RegistrationType::class, $user);
 
@@ -68,8 +72,13 @@ class AccountController extends AbstractController
         {   
             $hash= $encoder->encodePassword($user, $user->getMotDePasse());
             $user->setMotDePasse($hash);
+            //$role = new Role ();
+            //$role->setTitle('ROLE_USER');
+           // $personne->addPersonneRole($role);
+            //$manager->persist($role);
             $manager->persist($user);
-            $manager->flush($user);
+            //$lesPersonnes[]= $personne;
+            $manager->flush();
 
             $this->addFlash('success', 'Votre compte est bien crée, vous pouvez maintenant vous connectez au site !');
 
@@ -145,7 +154,7 @@ class AccountController extends AbstractController
 
                    //vérifier que le old password est le même que celui de l'utilisateur
 
-                   if(!password_verify($passwordUpdate->getOldPassword(), $user->getMotDePasse())){
+                   if(!password_verify($passwordUpdate->getOldPassword(),  $user->getMotDePasse())){
                        //erreur de mot de passe     
                        
                        $form->get('oldPassword')->addError(new FormError("Le mot de passe que vous avez tapé n'est pas le mot de passe actuel!"));

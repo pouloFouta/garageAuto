@@ -12,9 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Responsable extends Personne
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="Personne")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
     private $id;
 

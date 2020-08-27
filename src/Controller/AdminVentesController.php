@@ -239,6 +239,14 @@ class AdminVentesController extends AbstractController
 
     }
 
-
-
+/**
+     * pour enregistrer un achat de véhicule
+     *  
+     * @Route("admin/achat/create", name ="admin_ventes_edit")
+     * 
+     * @return Response
+     */
+// une autre option serait de se baser le formulaire de vente pour
+// enregistrer un achat avec les champs nécessaires a mettre à jour
+// (date montant , client)
 }

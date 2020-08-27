@@ -1,18 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'account/base.html.twig' %}
 
 {% block title %} listes des véhicules à vendre !{% endblock %}
 
 {% block body %}
-   <h1> listes des véhicules à vendre </h1>
-{% for vente in ventes %}
+   
+
 
 <div class="class container">
+<h2 class ="my-3"> listes des véhicules à vendre </h2>
 <div class=" row">
+{% for vente in ventes %}
 <div class="col-md-4">
+
  <div class="card bg-light mb-3">
  <div class="card-header text-center">
- une Toyota <strong> 6000&euros</strong> <br>
- <small> libre </small>
+ {{ vente.vehicule.marque }} {{ vente.vehicule.modele }} <br>
+ <small> {{ vente.montant ~ '€' }} </small>
  
  
  </div>
@@ -23,10 +26,21 @@
 
  <div class="card-body">
  <h4 class="card-title">
- belle voiture!
+   Détails
  </h4>
-<p class="card-text">  Details du véhicule</p>
-<a href="#" class="btn btn-secondary"> acheter</a>
+<p class="card-text"> 
+
+année: {{vente.vehicule.anneeFabrication|date("Y")}} <br>
+carburant: {{vente.vehicule.carburant}} <br>
+kilometrage: {{vente.vehicule.kilometrageActuel ~ ' km'}} <br>
+transmission: {{vente.vehicule.transmission}} <br>
+puissance: {{vente.vehicule.puissance ~ 'cv'}} <br>
+options: {{vente.vehicule.options}} <br>
+
+
+</p>
+
+<a href="{{ path('client_ventes_achat', {'id': vente.id}) }}" class="btn btn-secondary"> acheter</a>
  
  </div>
  
@@ -36,9 +50,9 @@
 
 
 </div>   
-
 {% endfor %}
 </div>
+
 
 
 

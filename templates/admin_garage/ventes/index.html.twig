@@ -22,6 +22,8 @@
 						statut</th>
 					<th>
 						prix</th>
+
+						<th> client </th>
 					
 
 
@@ -40,11 +42,25 @@
 						    on peut afficher l'image .
 							la DB stocke juste le nom de l'image
 						  #}
-						<td><img src="/uploads/{{ vente.vehicule.imageVehicule }}" </td>
+						<td><img src="/uploads/{{ vente.vehicule.imageVehicule }}" alt="photo véhicule"</td>
 						<td>{{ vente.statutVente }}</td>
+                              
+
 						<td>{{ vente.montant ~ '€' }}</td>
+						   {% if vente.client != null %}
+						   
+						   <td> {{vente.client.nom}}   	</td>
+						   
+						  
+
+		
+							   {% else %}
+								  <td> aucun </td> 
+						     {% endif %}
 						
 						
+						
+
 
 
 						<td>
@@ -70,7 +86,13 @@
 
 	<a href="{{path('admin_ventes_create')}}">
 		<button class="btn-success ml-5 ">
-			Enregistrer une vente
+			publier une vente
+		</button>
+	</a>
+
+	<a href="{{path('admin_ventes_create')}}">
+		<button class="btn-success ml-5 ">
+			Enregistrer un achat
 		</button>
 	</a>
 {% endblock %}

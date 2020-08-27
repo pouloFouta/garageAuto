@@ -12,10 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 class Reparateur extends Personne
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\OneToOne(targetEntity="Personne")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
      */
+    
     private $id;
 
     /**
@@ -100,6 +100,4 @@ class Reparateur extends Personne
     }
 
     
-
-   
 }

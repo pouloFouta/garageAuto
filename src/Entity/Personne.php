@@ -32,15 +32,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Personne  
 
 
-
-{
-/*Personne implements UserInterface 
-implementer les methodes associes 
-
-
-
-*/
-
+ {
 
     /**
      * @ORM\Id()
@@ -66,18 +58,20 @@ implementer les methodes associes
      */
     private $email;
 
+    
+
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $adresse;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20,nullable=true)
      
      */
     private $telephone;
 
-   
+
 
 
     public function getId(): ?int
@@ -145,101 +139,6 @@ implementer les methodes associes
         return $this;
     }
 
-  // a partir d'ici les modifications pour transformer Personne en User pour l'authentfication
-    /*public function getUsername()
-    {
-        return $this->email;
-    }
-
-    private $personneRoles;
-
-    public function __construct()
-    {
-        $this->personneRoles = new ArrayCollection();
-    }
-
-    public function getRoles()
-    {
-        
-
-        $roles =$this->personneRoles->map(function($role) {
-
-           return $role->getTitle();
-        })->toArray();
-
-        $roles [] = 'ROLE_USER';
-
-       
-
-        
-        return $roles;
-    }
-   
-    public function getPassword()
-
-    {
-        return $this->mot_de_passe; 
-    }
-
-    public function getSalt() {}
-
-   
-    public function eraseCredentials(){}
-
-    public function getMotDePasse(): ?string
-    {
-        return $this->mot_de_passe;
-    }
-
-    public function setMotDePasse(string $mot_de_passe): self
-    {
-        $this->mot_de_passe = $mot_de_passe;
-
-        return $this;
-    }
-    
-    public function getFullName(){
-
-        return "{$this->prenom} {$this->nom}";
-
-    }
-
-    /**
-     * @return Collection|Role[]
-     */
-    
-    /* public function getPersonneRoles(): Collection
-    {
-        return $this->personneRoles;
-    }
-
-    public function addPersonneRole(Role $personneRole): self
-    {
-        if (!$this->personneRoles->contains($personneRole)) {
-            $this->personneRoles[] = $personneRole;
-            $personneRole->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removePersonneRole(Role $personneRole): self
-    {
-        if ($this->personneRoles->contains($personneRole)) {
-            $this->personneRoles->removeElement($personneRole);
-            $personneRole->removeUser($this);
-        }
-
-        return $this;
-    }
-    /**
-     * 
-     * @Assert\EqualTo(propertyPath="mot_de_passe", message="Vous n'avez pas correctement confirmé le mot de passe!")
-     */
-    
-    
-    // public $confirmation_mot_de_passe;
-
-
+ 
 
 }

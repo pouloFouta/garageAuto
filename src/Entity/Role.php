@@ -51,7 +51,7 @@ class Role
     }
 
     /**
-     * @return Collection|User[]
+     * @return Collection|Personne[]
      */
     public function getUsers(): Collection
     {

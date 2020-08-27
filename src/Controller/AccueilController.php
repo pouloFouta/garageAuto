@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Vente;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AccueilController extends AbstractController
 {
@@ -34,9 +35,18 @@ class AccueilController extends AbstractController
      * @Route("/ventes", name="ventes")
      */
     public function ventes()
+      
     {
-        return $this->render('vente.html.twig');
+        $repo = $this->getDoctrine()->getRepository(Vente::class);
+        $ventes = $repo->findAll();
+
+        
+    return $this->render('vente.html.twig', [
+        'ventes' => $ventes
+    ]);
     }
+    
+    
 
      /**
      * @Route("/offres", name="offres")

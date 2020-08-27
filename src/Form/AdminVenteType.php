@@ -28,22 +28,24 @@ class AdminVenteType extends AbstractType
             -> add('statutVente', ChoiceType::class,[
                 'choices' => [
                     'libre' => 'libre',
-                    'reservé' => 'réservé'],
+                    'réservé pour achat' => 'réservé pour achat'],
                 'label' => 'statut vente'
             ])
 
-
+            /*->add('date_vente' ,null,[
+                'label' => 'date vente',
+                'widget' => 'single_text'
+                 
+                 
+             ])*/
               
          -> add('vehicule', AdminVehiculeVenteType::class ,[
 
             'label' => false
             ]);
-            /*->add('date_achat' ,null,[
-               'label' => 'date achat',
-               'widget' => 'single_text',
-                
-                
-            ]);*/
+            
+
+            //->add('client')
            
             
             

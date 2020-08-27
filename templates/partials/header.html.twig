@@ -1,5 +1,5 @@
 <nav class=" navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"><img src="img/default.png" alt="logo garage" height="100" width="100"></a>
+    <a class="navbar-brand" href="#"><img src="img/default01.png" alt="logo garage" height="100" width="100"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -18,8 +18,8 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ path('entretien') }}">Entretien et diagnostic</a>
                     <a class="dropdown-item" href="{{ path('location') }}">Locations véhicules</a>
-                    <a class="dropdown-item" href="{{ path('client_ventes_index') }}">Ventes véhicules</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="{{ path('ventes') }}">Ventes véhicules</a>
+                    
                 </div>
             </li>
             <li class="nav-item">
@@ -78,6 +78,7 @@
         
     </div>
 </nav>
+
 
 {% for message in app.flashes('success')%}
 <div class="alert alert-success"> {{message}} </div>

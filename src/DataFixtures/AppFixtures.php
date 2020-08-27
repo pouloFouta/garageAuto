@@ -2,11 +2,13 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
 use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\Personne;
+use App\Entity\Responsable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker\Factory;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
@@ -28,7 +30,7 @@ class AppFixtures extends Fixture
          
             // création du user avec les droits Admin
          
-            $adminUser = new User();
+            $adminUser = new User ();
             $adminUser->setNom('Bah')
                       ->setPrenom('Alihou')
                       ->setEmail('alihou.bxl@gmail.com')
@@ -39,7 +41,7 @@ class AppFixtures extends Fixture
           
         // Gestion des utilisateurs
 
-        $users = [];
+        /*$users = [];
         for ($i=1 ; $i <=10 ; $i++) {
 
              $user = new User;
@@ -57,7 +59,7 @@ class AppFixtures extends Fixture
 
         }
         // à voir la diff entre ObjectManager et  EntityManagerInterface
-
+*/
         $manager->flush(); 
     }
 }

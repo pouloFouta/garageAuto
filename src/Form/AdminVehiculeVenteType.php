@@ -48,7 +48,11 @@ class AdminVehiculeVenteType extends AbstractType
             ])
             ->add('puissance')
             ->add('anneeFabrication',null,[
-                'label' => 'Année de Fabrication'
+                'label' => 'Année de Fabrication',
+               
+                    'widget' => 'single_text',
+                    
+               
             ]);
             
             //remplacer par imageVehicule si possible

@@ -111,7 +111,13 @@ class Specialite
                 $gestionVehicule->setSpecialite(null);
             }
         }
-
         return $this;
     }
-}
+    
+    public function __toString()
+    {
+        return $this->nom_specialite;
+    }
+        
+
+    }
