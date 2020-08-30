@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeBonRepository")
@@ -20,18 +21,32 @@ class TypeBon
 
     /**
      * @ORM\Column(type="string", length=255)
+     * 
      */
     private $description_type;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive
+     * 
      */
     private $nb_points_necessaires;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Bon", mappedBy="TypeBon")
+     * @ORM\OneToMany(targetEntity="App\Entity\Bon", mappedBy="TypeBon",cascade={"persist", "remove"})
      */
     private $bons;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $validite;
+
+    /**
+     * ce champ sert à générer le nombre de  bons clients pour ce type de bon
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $quantite;
 
     public function __construct()
     {
@@ -94,6 +109,30 @@ class TypeBon
                 $bon->setTypeBon(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getValidite(): ?\DateTimeInterface
+    {
+        return $this->validite;
+    }
+
+    public function setValidite(\DateTimeInterface $validite): self
+    {
+        $this->validite = $validite;
+
+        return $this;
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(?int $quantite): self
+    {
+        $this->quantite = $quantite;
 
         return $this;
     }

@@ -60,7 +60,8 @@ class AdminVehiculeVenteType extends AbstractType
 
                 'label' => 'Image du véhicule',
                  'mapped'=> false,
-                 'required' => false
+                 'required' => false,
+                 //'attr'     => ['class' =>'custom-file-input']
                  
          ]);
     

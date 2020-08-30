@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Location;
 use App\Entity\Vente;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,14 @@ class AccueilController extends AbstractController
      */
     public function location()
     {
-        return $this->render('location.html.twig');
+        $repo = $this->getDoctrine()->getRepository(Location::class);
+        $locations = $repo->findAll();
+
+        
+    return $this->render('location.html.twig', [
+        'locations' => $locations
+    ]);
+
     }
 
      /**

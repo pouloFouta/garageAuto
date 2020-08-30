@@ -88,7 +88,7 @@ class Vehicule
 
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="vehicule")
+     * @ORM\OneToMany(targetEntity="App\Entity\Location", mappedBy="vehicule",cascade={"persist", "remove"})
      */
     private $locations;
 

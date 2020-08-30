@@ -36,6 +36,7 @@ class Client extends Personne
 
     /**
      * @ORM\OneToMany(targetEntity="Location" ,mappedBy="client")
+     * 
      */
 
     private $locations;

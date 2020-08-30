@@ -25,7 +25,7 @@ class Bon
     private $validite;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeBon", inversedBy="bons")
+     * @ORM\ManyToOne(targetEntity="App\Entity\TypeBon", inversedBy="bons",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $TypeBon;

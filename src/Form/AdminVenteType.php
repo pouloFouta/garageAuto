@@ -28,7 +28,8 @@ class AdminVenteType extends AbstractType
             -> add('statutVente', ChoiceType::class,[
                 'choices' => [
                     'libre' => 'libre',
-                    'réservé pour achat' => 'réservé pour achat'],
+                    'réservé pour achat' => 'réservé pour achat',
+                     'vendu' => 'vendu' ],
                 'label' => 'statut vente'
             ])
 

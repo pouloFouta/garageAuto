@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Vehicule;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LocationRepository")
@@ -17,12 +19,12 @@ class Location
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $date_location;
 
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(type="smallint", nullable=true)
      */
     private $nb_jours;
 
@@ -34,15 +36,23 @@ class Location
 
     /**
      * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="locations")
+     * @ORM\JoinColumn(nullable=true)
      */
 
     private $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="locations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="locations",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid
      */
     private $vehicule;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $statutLocation;
 
     public function getId(): ?int
     {
@@ -105,6 +115,18 @@ class Location
     public function setVehicule(?Vehicule $vehicule): self
     {
         $this->vehicule = $vehicule;
+
+        return $this;
+    }
+
+    public function getStatutLocation(): ?string
+    {
+        return $this->statutLocation;
+    }
+
+    public function setStatutLocation(string $statutLocation): self
+    {
+        $this->statutLocation = $statutLocation;
 
         return $this;
     }

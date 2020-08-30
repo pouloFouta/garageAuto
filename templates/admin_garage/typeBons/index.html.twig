@@ -1,0 +1,52 @@
+{% extends 'admin_garage/base.html.twig' %}
+
+{% block title %}Gestion des Type de bons !{% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+<h1 class="my-5">Gestion des Type de bons de réparations </h1>
+
+<table class="table table-hover">
+<thead>
+    <tr>
+        <th> Id</th>
+        <th> Description du type</th>
+        <th> Nombres de points associés</th>
+        <th> Validité</th>
+        <th> Quantité de bons</th>
+        
+        
+        <th> Actions</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for typeBon in typeBons %}
+      
+<tr>
+    <td>{{ typeBon.id }}</td>
+    <td>{{  typeBon.descriptionType }}</td>
+    <td>{{ typeBon.nbPointsNecessaires }}</td>
+    <td>{{ typeBon.validite|date("d/m/Y") }}</td>
+    <td>{{ typeBon.quantite }}</td>
+
+    <td>
+    <a href="{{path('admin_typeBons_edit', {'id': typeBon.id}) }}" class="btn btn-primary"> <i class="fas fa-edit"> </i> </a>
+    <a href="{{ path('admin_typeBons_delete', {'id': typeBon.id}) }}" class="btn btn-danger"> <i class="fas fa-trash"> </i> </a>
+  
+   </td>
+   
+</tr>
+
+ 
+{% endfor %}
+</tbody>
+
+</table>
+
+
+</div>
+
+<a href="{{ path('admin_typeBons_create') }} "> <button class="btn-success ml-5 ">  Ajouter un type de bon  </button> </a> 
+{% endblock %}

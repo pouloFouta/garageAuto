@@ -1,6 +1,6 @@
 {%  extends 'admin_garage/base.html.twig'  %}
 
-{% block title %}Modifier  une vente{% endblock %}
+{% block title %}Modifier une location{% endblock %}
 
 
 {% form_theme form _self %}
@@ -9,12 +9,12 @@
 
 <div class="container">
 
-<h1 class ="text-center"> Enregistrer une  vente </h1>
+<h1 class ="text-center"> Modifier une location </h1>
 
 {{ form_start(form) }}
 
-{{form_row(form.montant)}}
-{{form_row(form.statutVente)}}
+{{form_row(form.prix)}}
+{{form_row(form.statut_location)}}
 {{form_row(form.vehicule.numero_chassis)}}
 {{form_row(form.vehicule.marque)}}
 {{form_row(form.vehicule.modele)}}
@@ -30,7 +30,7 @@
 
  {{form_row(form.vehicule.imageFichier)}}
 
- <button type ="submit" class="btn btn-success"> mettre à jour  </button>
+ <button type ="submit" class="btn btn-success"> Mettre à jour </button>
 
 {{ form_end(form) }}
 

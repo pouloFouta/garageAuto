@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Vente;
 use App\Entity\Client;
+use App\Entity\Location;
 use App\Entity\Personne;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -89,11 +90,20 @@ public function achatVehicule(Vente $vente, EntityManagerInterface $manager)
 
 /**
  * permet de lister les locations du client
+ * @Route("/clients/locations", name="client_locations_index")
  * 
  */
 
-public function mesLocations ()
+public function listeLocations ()
 {
+
+    $repo = $this->getDoctrine()->getRepository(Location::class);
+    $locations = $repo->findAll();
+
+    
+return $this->render('client_locations/index.html.twig', [
+    'locations' => $locations
+]);
 
 
 }

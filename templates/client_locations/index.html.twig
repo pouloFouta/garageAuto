@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'account/base.html.twig' %}
 
 {% block title %} listes des véhicules à louer !{% endblock %}
 
@@ -36,13 +36,13 @@ kilometrage: {{location.vehicule.kilometrageActuel ~ ' km'}} <br>
 transmission: {{location.vehicule.transmission}} <br>
 puissance: {{location.vehicule.puissance ~ 'cv'}} <br>
 options: {{location.vehicule.options}} <br>
-nombre de portes: {{location.vehicule.nbPortes}} 
+nombre de portes : {{location.vehicule.nbPortes}}
 
 
 </p>
 
 
-<a href="{#{{ path('client_ventes_achat', {'id': vente.id}) }}#}" class="btn btn-secondary"> louer</a>
+<a href="{#{{ path('client_locations_loue', {'id': location.id}) }}#}" class="btn btn-secondary"> louer</a>
  
  </div>
  

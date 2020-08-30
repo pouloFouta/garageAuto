@@ -36,9 +36,11 @@ kilometrage: {{vente.vehicule.kilometrageActuel ~ ' km'}} <br>
 transmission: {{vente.vehicule.transmission}} <br>
 puissance: {{vente.vehicule.puissance ~ 'cv'}} <br>
 options: {{vente.vehicule.options}} <br>
+nombre de places : {{location.vehicule.nbPlaces}}
 
 
 </p>
+
 
 <a href="{{ path('client_ventes_achat', {'id': vente.id}) }}" class="btn btn-secondary"> acheter</a>
  
@@ -58,6 +60,16 @@ options: {{vente.vehicule.options}} <br>
 
 
 </div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
 
 
 
