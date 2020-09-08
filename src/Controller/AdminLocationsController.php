@@ -10,13 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-
+/**
+ * 
+ * @IsGranted("ROLE_ADMIN")
+ */
 
 
 class AdminLocationsController extends AbstractController
 {
     /**
+     * 
      * @Route("/admin/locations", name="admin_locations_index")
      * @return Location[] Returns an array of Location objects
      */

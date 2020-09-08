@@ -24,7 +24,7 @@ class AppFixtures extends Fixture
             $faker = Factory::create('fr-FR');
 
             // création du role admin
-            $adminRole = new Role;
+           /* $adminRole = new Role;
             $adminRole->setTitle('ROLE_ADMIN');
             $manager->persist($adminRole);
          
@@ -38,6 +38,23 @@ class AppFixtures extends Fixture
                       ->addUserRole($adminRole);
 
                       $manager->persist($adminUser);
+
+         //création du role reparateur
+        $repaRole = new Role;
+        $repaRole->setTitle('ROLE_REPARATEUR');
+        $manager->persist($repaRole);
+     
+        // création du user avec les droits Admin
+     
+        $repaUser = new User ();
+        $repaUser->setNom('john')
+                  ->setPrenom('smith')
+                  ->setEmail('smith@mail.com')
+                  ->setMotDePasse($this->encoder->encodePassword($repaUser, 'password'))
+                  ->addUserRole($repaRole);
+
+                  $manager->persist($adminUser);
+            
           
         // Gestion des utilisateurs
 

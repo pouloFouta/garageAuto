@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Role;
+use App\Entity\User;
 use App\Entity\Personne;
 use App\Entity\Reparateur;
 use App\Entity\Specialite;
 use App\Form\PersonneType;
 use App\Form\ReparateurType;
+use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManager;
 use App\Form\AdminReparateurType;
 use App\Repository\UserRepository;
@@ -18,13 +20,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AdminReparateursController extends AbstractController
 {
     /**
      * @Route("/admin/reparateurs", name="admin_reparateurs_index")
      * 
-     * @return Reparateur[] Returns an array of Personne objects
+     * @return Reparateur[] Returns an array of User objects
      */
     public function index ()
     {
@@ -39,7 +42,7 @@ class AdminReparateursController extends AbstractController
             $reparateurs = $repo->findAll();
              dump( $reparateurs)  ; */
 
-             $repo = $this->getDoctrine()->getRepository(Personne::class) ; 
+             $repo = $this->getDoctrine()->getRepository(User::class) ; 
               $personnes = $repo->findAll();
               //dump( $reparateurs);
               //dd($reparateurs);
@@ -70,27 +73,48 @@ class AdminReparateursController extends AbstractController
      * 
      */
     
-    public function create ( Request $request, EntityManagerInterface $manager) {
+    public function create ( Request $request, EntityManagerInterface $manager,UserPasswordEncoderInterface $encoder) {
 
         $reparateur= new Reparateur();
-        //$role = new Role ('ROLE_USER');
+
+     
+    
 
 
         $form = $this->createForm(AdminReparateurType::class, $reparateur);
 
         $form->handleRequest($request);
         $lesSpec =[];
-        //$lesRol =[];
+        $lesRol =[];
     
 
 
         if ($form->isSubmitted()&& $form->isValid())
         { 
-            //$lesRol =$reparateur->getRoles();
+           
+            // création du role reparateur
+            
+           // $repaRole->setTitle('ROLE_REPARATEUR');
+            //$manager->persist($repaRole);
+         
 
-            $lesSpec =$reparateur->getSpecialite();
 
+        
+           //$reparateur->addUserRole->(['ROLE_REPARATEUR']);
 
+               //dump($role);
+               //$reparateur->addUserRole($role);
+                //$manager->persist($repaRole);
+            
+
+            //$lesSpec =$reparateur->getSpecialite();
+
+            $hash= $encoder->encodePassword($reparateur, $reparateur->getMotDePasse());
+            $reparateur->setMotDePasse($hash);
+
+            //$data = $form->get('user')->get('specialite')->getData();
+
+//$reparateur->addSpecialite($data);*/
             foreach ($lesSpec as $uneSpec)
 
             {

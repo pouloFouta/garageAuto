@@ -11,7 +11,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
+ *
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="userType", type="string")
+ * @ORM\DiscriminatorMap({
+ *   "User" = "User",
+ *   "Responsable" = "Responsable",
+ *   "Client" = "Client",
+ *   "Reparateur" = "Reparateur",
+ * })
+ * 
  * 
  * @UniqueEntity(
  * fields ={"email"},
@@ -27,7 +38,7 @@ class User implements UserInterface
      */
     private $id;
 
-    //extends Personne  
+    
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,9 +72,19 @@ class User implements UserInterface
     public $confirmation_mot_de_passe;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Role", mappedBy="users")
+     * @ORM\Column(type="json")
      */
-    private $userRoles;
+    private $roles = [];
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $telephone;
 
     public function __construct()
     {
@@ -115,22 +136,22 @@ class User implements UserInterface
   
    
     
-    public function getRoles()
-    {
-        
+   
 
-        $roles =$this->userRoles->map(function($role) {
+        public function getRoles(): array
+        {
+            $roles = $this->roles;
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_USER';
+            return array_unique($roles);
+        }
 
-           return $role->getTitle();
-        })->toArray();
-
-        $roles [] = 'ROLE_USER';
-
-       
-
-        
-        return $roles;
-    }
+        public function setRoles(array $roles): self
+        {
+            $this->roles = $roles;
+            return $this;
+        }
+    
    
     public function getPassword()
 
@@ -142,7 +163,7 @@ class User implements UserInterface
 
     public function getUsername()
     {
-        return $this->email;
+        return (string)$this->email;
     }
     
     public function eraseCredentials(){}
@@ -165,31 +186,30 @@ class User implements UserInterface
 
     }
 
-    /**
-     * @return Collection|Role[]
-     */
-    public function getUserRoles(): Collection
+    public function getAdresse(): ?string
     {
-        return $this->userRoles;
+        return $this->adresse;
     }
 
-    public function addUserRole(Role $userRole): self
+    public function setAdresse(?string $adresse): self
     {
-        if (!$this->userRoles->contains($userRole)) {
-            $this->userRoles[] = $userRole;
-            $userRole->addUser($this);
-        }
+        $this->adresse = $adresse;
 
         return $this;
     }
 
-    public function removeUserRole(Role $userRole): self
+    public function getTelephone(): ?string
     {
-        if ($this->userRoles->contains($userRole)) {
-            $this->userRoles->removeElement($userRole);
-            $userRole->removeUser($this);
-        }
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): self
+    {
+        $this->telephone = $telephone;
 
         return $this;
     }
+
+
+    
 }

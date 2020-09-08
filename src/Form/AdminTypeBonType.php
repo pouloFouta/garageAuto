@@ -3,8 +3,10 @@
 namespace App\Form;
 
 use App\Entity\TypeBon;
+use DateTime;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -29,7 +31,8 @@ class AdminTypeBonType extends AbstractType
             ->add('validite',null , [
 
                 'label' => 'Validité',
-                'widget' => 'single_text'
+                'widget' => 'single_text',
+                'data' => new DateTime('+ 2 year')
             ])
 
 

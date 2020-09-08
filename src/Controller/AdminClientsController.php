@@ -23,7 +23,7 @@ class AdminClientsController extends AbstractController
     public function index()
     {
 
-        $repo = $this->getDoctrine()->getRepository(Personne::class);
+        $repo = $this->getDoctrine()->getRepository(User::class);
 
         $pers = $repo->findAll();
 

@@ -10,18 +10,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ClientRepository")
  */
-class Client extends Personne
+class Client extends User
 {
-    /**
-     * @ORM\OneToOne(targetEntity="Personne")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
-     */
    
-    private $id;
-
+    
 
     /**
-     * @ORM\ManyToOne(targetEntity="Groupe" ,inversedBy="clients")
+     * @ORM\ManyToOne(targetEntity="Groupe" ,inversedBy="users")
      */
 
     private $groupe;
@@ -29,20 +24,20 @@ class Client extends Personne
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Vehicule" ,mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Vehicule" ,mappedBy="user")
      */
 
     private  $vehicules;
 
     /**
-     * @ORM\OneToMany(targetEntity="Location" ,mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Location" ,mappedBy="user")
      * 
      */
 
     private $locations;
 
     /**
-     * @ORM\OneToMany(targetEntity="Vente" ,mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Vente" ,mappedBy="user")
      */
 
     private $achats;
@@ -60,6 +55,11 @@ class Client extends Personne
      */
     private $bons;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Facture::class, mappedBy="client")
+     */
+    private $factures;
+
 
 
 
@@ -70,16 +70,14 @@ class Client extends Personne
         $this->locations = new ArrayCollection();
         $this->achats = new ArrayCollection();
         $this->bons = new ArrayCollection();
+        $this->factures = new ArrayCollection();
+        
        
     }
 
 
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
+    
     public function getGroupe(): ?Groupe
     {
         return $this->groupe;
@@ -104,7 +102,7 @@ class Client extends Personne
     {
         if (!$this->vehicules->contains($vehicule)) {
             $this->vehicules[] = $vehicule;
-            $vehicule->setClient($this);
+            $vehicule->setUser($this);
         }
 
         return $this;
@@ -115,8 +113,8 @@ class Client extends Personne
         if ($this->vehicules->contains($vehicule)) {
             $this->vehicules->removeElement($vehicule);
             // set the owning side to null (unless already changed)
-            if ($vehicule->getClient() === $this) {
-                $vehicule->setClient(null);
+            if ($vehicule->getUser() === $this) {
+                $vehicule->setUser(null);
             }
         }
 
@@ -135,7 +133,7 @@ class Client extends Personne
     {
         if (!$this->locations->contains($location)) {
             $this->locations[] = $location;
-            $location->setClient($this);
+            $location->setUser($this);
         }
 
         return $this;
@@ -146,8 +144,8 @@ class Client extends Personne
         if ($this->locations->contains($location)) {
             $this->locations->removeElement($location);
             // set the owning side to null (unless already changed)
-            if ($location->getClient() === $this) {
-                $location->setClient(null);
+            if ($location->getUser() === $this) {
+                $location->setUser(null);
             }
         }
 
@@ -166,7 +164,7 @@ class Client extends Personne
     {
         if (!$this->achats->contains($achat)) {
             $this->achats[] = $achat;
-            $achat->setClient($this);
+            $achat->setUser($this);
         }
 
         return $this;
@@ -177,8 +175,8 @@ class Client extends Personne
         if ($this->achats->contains($achat)) {
             $this->achats->removeElement($achat);
             // set the owning side to null (unless already changed)
-            if ($achat->getClient() === $this) {
-                $achat->setClient(null);
+            if ($achat->getUser() === $this) {
+                $achat->setUser(null);
             }
         }
 
@@ -211,7 +209,7 @@ class Client extends Personne
     {
         if (!$this->bons->contains($bon)) {
             $this->bons[] = $bon;
-            $bon->setClient($this);
+            $bon->setUser($this);
         }
 
         return $this;
@@ -222,8 +220,39 @@ class Client extends Personne
         if ($this->bons->contains($bon)) {
             $this->bons->removeElement($bon);
             // set the owning side to null (unless already changed)
-            if ($bon->getClient() === $this) {
-                $bon->setClient(null);
+            if ($bon->getUser() === $this) {
+                $bon->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Facture[]
+     */
+    public function getFactures(): Collection
+    {
+        return $this->factures;
+    }
+
+    public function addFacture(Facture $facture): self
+    {
+        if (!$this->factures->contains($facture)) {
+            $this->factures[] = $facture;
+            $facture->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFacture(Facture $facture): self
+    {
+        if ($this->factures->contains($facture)) {
+            $this->factures->removeElement($facture);
+            // set the owning side to null (unless already changed)
+            if ($facture->getUser() === $this) {
+                $facture->setUser(null);
             }
         }
 

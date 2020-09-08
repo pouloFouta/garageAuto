@@ -52,7 +52,7 @@ class AdminBonsController extends AbstractController
          {
              $nb= $typeBon->getQuantite();
 
-             for ($i=0; $i<=$nb;$i++)
+             for ($i=0; $i<=$nb-1;$i++)
              {
                 $bons[$i] = new Bon();
               

@@ -86,7 +86,7 @@ class AdminReparationsController extends AbstractController
             
             //on récupère le client depuis le véhicule et on le persiste 
 
-            $client = $ve->getClient();
+            $client = $ve->getUser();
             $manager->persist($client);
     
       
@@ -164,7 +164,7 @@ class AdminReparationsController extends AbstractController
             
             //on récupère le client depuis le véhicule
 
-             $client = $ve->getClient();
+             $client = $ve->getUser();
              $manager->persist($client);
              $manager->persist($ve);
 

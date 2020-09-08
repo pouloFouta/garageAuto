@@ -62,7 +62,7 @@ class AccountController extends AbstractController
     public function register (Request $request, EntityManagerInterface  $manager, UserPasswordEncoderInterface $encoder ) 
     {
         //$lesPersonnes =[];
-        $user = new User();
+        $user = new Client();
          
          $form = $this->createForm(RegistrationType::class, $user);
 

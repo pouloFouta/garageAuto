@@ -45,6 +45,11 @@ class Facture
 
     private $reparations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="factures")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->reparations = new ArrayCollection();
@@ -130,6 +135,18 @@ class Facture
                 $reparation->setFacture(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

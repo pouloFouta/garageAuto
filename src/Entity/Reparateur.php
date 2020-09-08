@@ -9,14 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ReparateurRepository")
  */
-class Reparateur extends Personne
+class Reparateur extends User
 {
-    /**
-     * @ORM\OneToOne(targetEntity="Personne")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
-     */
-    
-    private $id;
+   
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Specialite", inversedBy="reparateurs")
@@ -28,6 +23,8 @@ class Reparateur extends Personne
      */
     private $gestionVehicules;
 
+
+
     
 
    
@@ -35,12 +32,15 @@ class Reparateur extends Personne
     {
         
         $this->specialite = new ArrayCollection();
-        $this->gestionVehicules = new ArrayCollection();    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
+        $this->gestionVehicules = new ArrayCollection();  
+          
+        
+    
     }
+
+
+
+    
 
     /**
      * @return Collection|Specialite[]

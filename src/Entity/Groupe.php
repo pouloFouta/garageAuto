@@ -25,10 +25,10 @@ class Groupe
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Client" ,mappedBy="groupe")
+     * @ORM\OneToMany(targetEntity="User" ,mappedBy="groupe")
      */
 
-    private $clients;
+    private $users;
 
     public function __construct()
     {
@@ -55,16 +55,16 @@ class Groupe
     /**
      * @return Collection|Client[]
      */
-    public function getClients(): Collection
+    public function getUsers(): Collection
     {
-        return $this->clients;
+        return $this->users;
     }
 
-    public function addClient(Client $client): self
+    /*public function addUser(User $user): self
     {
-        if (!$this->clients->contains($client)) {
-            $this->clients[] = $client;
-            $client->setGroupe($this);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setGroupe($this);
         }
 
         return $this;
@@ -81,5 +81,5 @@ class Groupe
         }
 
         return $this;
-    }
+    }*/
 }

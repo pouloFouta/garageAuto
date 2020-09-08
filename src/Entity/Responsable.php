@@ -9,15 +9,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ResponsableRepository")
  */
-class Responsable extends Personne
+class Responsable extends User
 {
-    /**
-     * @ORM\OneToOne(targetEntity="Personne")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
-     */
-    private $id;
-
-
+    
+    
     /**
      * @ORM\OneToMany(targetEntity="Facture", mappedBy="responsable")
      */

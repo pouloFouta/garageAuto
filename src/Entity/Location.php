@@ -35,11 +35,11 @@ class Location
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="locations")
+     * @ORM\ManyToOne(targetEntity="User" ,inversedBy="locations")
      * @ORM\JoinColumn(nullable=true)
      */
 
-    private $client;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="locations",cascade={"persist", "remove"})
@@ -95,14 +95,14 @@ class Location
         return $this;
     }
 
-    public function getClient(): ?Client
+    public function getUser(): ?User
     {
-        return $this->client;
+        return $this->user;
     }
 
-    public function setClient(?Client $client): self
+    public function setUser(?User $user): self
     {
-        $this->client = $client;
+        $this->user = $user;
 
         return $this;
     }

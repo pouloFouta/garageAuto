@@ -79,12 +79,12 @@ class Vehicule
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="vehicules", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="User" ,inversedBy="vehicules", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      * @Assert\Valid
      */
 
-    private $client;
+    private $user;
 
 
     /**
@@ -244,14 +244,14 @@ class Vehicule
         return $this;
     }
 
-    public function getClient(): ?Client
+    public function getUser(): ?User
     {
-        return $this->client;
+        return $this->user;
     }
 
-    public function setClient(?Client $client): self
+    public function setUser(?Client $user): self
     {
-        $this->client = $client;
+        $this->user = $user;
 
         return $this;
     }
