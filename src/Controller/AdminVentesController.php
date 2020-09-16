@@ -16,9 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- *  @IsGranted("ROLE_ADMIN")
- */
+
 
 class AdminVentesController extends AbstractController
 {
@@ -39,7 +37,9 @@ class AdminVentesController extends AbstractController
 
 
 
-    /**
+    /** 
+     * @IsGranted("ROLE_ADMIN")
+ 
      * pour enregister une vente
      * 
      * @Route("admin/ventes/add", name ="admin_ventes_create")
@@ -67,7 +67,7 @@ class AdminVentesController extends AbstractController
             $uneimage =$form->get('vehicule')->get('imageFichier')->getData();
               dump($uneimage);
              
-            // triatement du fichier téléchargé
+            // traitement du fichier téléchargé
             if ($uneimage) {
                 $originalFilename = pathinfo($uneimage->getClientOriginalName(), PATHINFO_FILENAME);
                 // choix du nom de l'image 
@@ -119,6 +119,7 @@ class AdminVentesController extends AbstractController
 
    }
     /**
+     * @IsGranted("ROLE_ADMIN")
      * pour modifier une vente
      * 
      * @Route("admin/ventes/{id}/edit", name ="admin_ventes_edit")
@@ -168,8 +169,11 @@ class AdminVentesController extends AbstractController
                 $voiture->setImageVehicule($newFilename);
             
             }
-                
-            
+            // ceci permet de retirer le client de la vente et donc libérer la vente
+           if ($vente->getStatutVente()=="libre")
+           {
+               $vente->setClient(null);
+           }
         
           
             // afin de faire fonctionner la modification de la vente , 
@@ -200,7 +204,8 @@ class AdminVentesController extends AbstractController
 
    }
 
-/**
+    /**
+     * @IsGranted("ROLE_ADMIN")
      * pour supprimer une vente
      * 
      * @Route("admin/ventes/{id}/delete", name ="admin_ventes_delete")

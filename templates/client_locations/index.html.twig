@@ -41,8 +41,20 @@ nombre de portes : {{location.vehicule.nbPortes}}
 
 </p>
 
+{#{% if location.statutLocation == 'loué' %}#}
 
-<a href="{#{{ path('client_locations_loue', {'id': location.id}) }}#}" class="btn btn-secondary"> louer</a>
+{#<a href="#" class="btn btn-secondary"> réserver</a>#}
+
+{#{% else %}#}
+  
+
+<a href="{{path('client_locations_louer', {'id':location.id}) }}" class="btn btn-secondary"> louer</a>
+
+{#{% endif %}#}
+
+
+
+
  
  </div>
  

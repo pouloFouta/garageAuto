@@ -31,9 +31,9 @@ class Bon
     private $TypeBon;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="bons")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="bons")
      */
-    private $user;
+    private $client;
 
 
     
@@ -74,14 +74,14 @@ class Bon
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getClient(): ?Client
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?User $user): self
+    public function setClient(?Client $client): self
     {
-        $this->user = $user;
+        $this->client = $client;
 
         return $this;
     }

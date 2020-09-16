@@ -1,0 +1,95 @@
+
+{% extends 'admin_garage/base.html.twig' %}
+
+{% block title %} Journal d'activités des réparations {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+		<h1 class="my-5">
+		Journal d'activités de la réparation</h1>
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>
+						Id</th>
+					<th>
+						Reparation</th>
+					
+					<th>
+						Spécialité(s)</th>
+					<th>
+						Reparateur</th>
+					<th>
+						Commentaires</th>
+                        
+						
+					
+
+
+					{#<th>
+						Actions</th>#}
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for gestion in gestions %}
+
+					<tr>
+						<td>{{ gestion.id }}</td>
+						<td>{{ gestion.reparation.description  ~ "-" }}  {{ gestion.reparation.vehicule.marque }} {{ gestion.reparation.vehicule.modele }}  </td>
+						 
+						<td>{{ gestion.specialite.nomSpecialite}}</td>
+                        <td>{{gestion.reparateur.fullName}}</td>
+                        <td>{{ gestion.commentaire }}</td>   
+
+					
+						   
+                            
+                            
+                         
+                            
+                           
+		
+							  
+								 
+					
+						
+						
+						
+
+
+
+						{#<td>
+							<a href=" " class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="">
+								<i class="fas fa-trash"></i>
+							</a>
+
+						</td>#}
+
+					</tr>
+
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+
+	</div>
+
+	<a href="">
+		<button class="btn-success ml-5 ">
+        {#l'idée est ici de cliquer sur ce bouton afin que la réparation passe au statut terminé#}
+			clôturer la gestion de la réparation 
+		</button>
+	</a>
+
+	
+{% endblock %}
+
+

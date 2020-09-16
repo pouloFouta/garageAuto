@@ -1,0 +1,22 @@
+{% extends "account/base.html.twig" %}
+
+{% block title %} Réserver une location{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1>  Réserver une location </h1>
+
+{{form_start(form)}}
+
+{{form_widget(form)}}
+{#{{form_row(form.dateLocation)}}#}
+{#{{form_row(form.nbJours)}}#}
+{#{{form_row(form.location.vehicule)}}#}
+
+<button type ="submit" class="btn btn-success"> Réserver </button>
+{{form_end(form)}}
+
+</div>
+    
+{% endblock %}

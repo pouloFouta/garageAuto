@@ -36,13 +36,18 @@ kilometrage: {{vente.vehicule.kilometrageActuel ~ ' km'}} <br>
 transmission: {{vente.vehicule.transmission}} <br>
 puissance: {{vente.vehicule.puissance ~ 'cv'}} <br>
 options: {{vente.vehicule.options}} <br>
-nombre de places : {{location.vehicule.nbPlaces}}
+nombre de places : {{vente.vehicule.nbPortes}}
 
 
 </p>
 
+ {% if vente.statutVente =="reservé pour achat" %}
 
+ <a href="#" class="btn btn-secondary" id="reserve"> réserver pour achat</a>
+ {% else %}
+   
 <a href="{{ path('client_ventes_achat', {'id': vente.id}) }}" class="btn btn-secondary"> acheter</a>
+{% endif %}
  
  </div>
  
@@ -69,10 +74,14 @@ nombre de places : {{location.vehicule.nbPlaces}}
 
 {% block javascripts %}
 
+ <script>
+$(document).ready(function(){
+  $("#reserve").click(function(){
+    alert("ce véhicule est déja reservé pour un achat");
+  });
+});
 
-
-
-
+</script>
 
 
 {% endblock %}

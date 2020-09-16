@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use DateTime;
+use App\Entity\User;
 use App\Entity\Panne;
 use App\Entity\Client;
 use App\Entity\Personne;
 use App\Entity\Vehicule;
+use App\Entity\Reparateur;
 use App\Entity\Reparation;
 use App\Form\AdminReparationType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,7 +88,7 @@ class AdminReparationsController extends AbstractController
             
             //on récupère le client depuis le véhicule et on le persiste 
 
-            $client = $ve->getUser();
+            $client = $ve->getClient();
             $manager->persist($client);
     
       
@@ -133,7 +135,7 @@ class AdminReparationsController extends AbstractController
      * @return Response
      */
 
-    public function edit(Reparation $reparation , Request $request,EntityManagerInterface $manager ){
+    public function edit(Reparation $reparation , Request $request,EntityManagerInterface $manager){
 
            $form= $this->createForm(AdminReparationType::class, $reparation);
 
@@ -155,7 +157,10 @@ class AdminReparationsController extends AbstractController
                    $manager->persist($unePanne);
 
             }
-           
+
+             
+              
+             
             // on recupère le vehicule avec ses valeurs depuis l'entité reparation 
             $ve = $reparation->getVehicule();
            
@@ -164,7 +169,7 @@ class AdminReparationsController extends AbstractController
             
             //on récupère le client depuis le véhicule
 
-             $client = $ve->getUser();
+             $client = $ve->getClient();
              $manager->persist($client);
              $manager->persist($ve);
 

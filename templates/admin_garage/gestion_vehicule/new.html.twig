@@ -1,0 +1,17 @@
+{% extends "admin_garage/base.html.twig" %}
+
+{% block title %}  Activité de la réparation  {% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1> Activité de la réparation </h1>
+
+{{form_start(form)}}
+{{form_widget(form)}}
+<button type ="submit" class="btn btn-success"> enregistrer </button>
+{{form_end(form)}}
+
+</div>
+    
+{% endblock %}

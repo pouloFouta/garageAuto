@@ -14,18 +14,18 @@
 					<th>
 						Id</th>
 					<th>
-						vehicule</th>
+						Vehicule</th>
 					
 					<th>
-						image</th>
+						Image</th>
 					<th>
-						statut location</th>
+						Statut location</th>
 					<th>
-						prix/jour</th>
-                        <th> nombre de Jours </th>
-                        <th> Total</th>
+						Prix/jour</th>
+                        
+                       
 
-						<th> client </th>
+						
 					
 
 
@@ -46,27 +46,19 @@
 						  #}
 						<td><img src="/uploads/{{ location.vehicule.imageVehicule }}" alt="photo véhicule"</td>
 						<td>{{ location.statutLocation}}</td>
-                        <td>{{location.prix ~ '€/jour' }}</td>
+                        <td>{{location.prix ~ ' €/jour' }}</td>
                               
 
 					
-						   {% if location.statutLocation == 'loué' %}
-                           <td> {{ location.nbJours }} </td>
+						
+                          
                             
                             
-                           <td>{{ location.prix * location.nbJours ~ '€' }}</td>
-                           <td> {{location.client.nom}} </td>
-						   
-                           {% else %}
-                           <td> {{ 0 }}
-                            
-                            
-                           <td>{{ 0 ~ '€' }}</td>
-                           <td> {{ 'aucun' }} </td>
-						   
-                               
-						   {% endif %}
+                          {# <td>{{ location.prix * location.nbJours ~ '€' }}</td>#}
+                          
 						  
+                               
+						 
 
 		
 							  
@@ -102,6 +94,11 @@
 	<a href="{{path('admin_locations_create')}}">
 		<button class="btn-success ml-5 ">
 			Ajouter une location
+		</button>
+	</a>
+	<a href="{{path('admin_locations_journal')}}">
+		<button class="btn-success ml-5 ">
+			journal  des locations
 		</button>
 	</a>
 

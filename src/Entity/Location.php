@@ -29,17 +29,17 @@ class Location
     private $nb_jours;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=10, scale=0,nullable =true)
      */
     private $prix;
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="User" ,inversedBy="locations")
+     * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="locations")
      * @ORM\JoinColumn(nullable=true)
      */
 
-    private $user;
+    private $client;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Vehicule", inversedBy="locations",cascade={"persist", "remove"})
@@ -50,7 +50,7 @@ class Location
 
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255,nullable=true)
      */
     private $statutLocation;
 
@@ -95,14 +95,14 @@ class Location
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getClient(): ?User
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?User $user): self
+    public function setClient(?User $client): self
     {
-        $this->user = $user;
+        $this->client = $client;
 
         return $this;
     }

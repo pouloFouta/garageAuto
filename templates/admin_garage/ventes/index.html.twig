@@ -49,7 +49,7 @@
 						<td>{{ vente.montant ~ '€' }}</td>
 						   {% if vente.client != null %}
 						   
-						   <td> {{vente.client.nom}}   	</td>
+						   <td> {{vente.client}}   	</td>
 						   
 						  
 
@@ -90,11 +90,7 @@
 		</button>
 	</a>
 
-	<a href="{{path('admin_ventes_create')}}">
-		<button class="btn-success ml-5 ">
-			Enregistrer un achat
-		</button>
-	</a>
+	
 {% endblock %}
 
 

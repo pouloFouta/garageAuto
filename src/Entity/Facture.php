@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FactureRepository")
@@ -24,12 +25,12 @@ class Facture
     private $date_facture;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=2, scale=2)
      */
     private $tva;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private $montant;
 
@@ -46,9 +47,20 @@ class Facture
     private $reparations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="factures")
+     * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="factures")
      */
-    private $user;
+    private $client;
+
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank(message ="veuillez indiquer le libéllé de la facture")
+     */
+    private $libelle;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $est_paye;
 
     public function __construct()
     {
@@ -139,14 +151,38 @@ class Facture
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getClient(): ?Client
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?User $user): self
+    public function setClient(?Client $client): self
     {
-        $this->user = $user;
+        $this->client = $client;
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getEstPaye(): ?string
+    {
+        return $this->est_paye;
+    }
+
+    public function setEstPaye(?string $est_paye): self
+    {
+        $this->est_paye = $est_paye;
 
         return $this;
     }

@@ -18,14 +18,11 @@ class LigneCommande
 
     /**
      * @ORM\Column(type="integer")
+     * 
      */
     private $quantite;
 
-    /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
-     */
-    private $prix_ligne;
-
+   
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Commande", inversedBy="ligneCommandes")
      * @ORM\JoinColumn(nullable=false)
@@ -33,7 +30,7 @@ class LigneCommande
     private $commande;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Piece", inversedBy="ligneCommandes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Piece", inversedBy="ligneCommandes",cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $piece;
@@ -55,17 +52,7 @@ class LigneCommande
         return $this;
     }
 
-    public function getPrixLigne(): ?string
-    {
-        return $this->prix_ligne;
-    }
-
-    public function setPrixLigne(string $prix_ligne): self
-    {
-        $this->prix_ligne = $prix_ligne;
-
-        return $this;
-    }
+   
 
     public function getCommande(): ?Commande
     {

@@ -3,10 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Facture;
+use App\Form\AdminFactureType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+/**
+ * 
+ * @IsGranted("ROLE_ADMIN")
+ */
 
 class AdminFacturesController extends AbstractController
 {
@@ -19,7 +26,7 @@ class AdminFacturesController extends AbstractController
          $repo= $this->getDoctrine()->getRepository(Facture::class);
          $factures = $repo->findAll();
 
-        return $this->render('admin_factures/factures/index.html.twig', [
+        return $this->render('admin_garage/factures/index.html.twig', [
             'factures' => $factures
         ]);
     }
@@ -40,7 +47,7 @@ class AdminFacturesController extends AbstractController
           {
 
 
-         
+          
           $manager->persist($facture);
             $manager->flush();
 
@@ -60,14 +67,43 @@ class AdminFacturesController extends AbstractController
      */
     public function edit(Facture $facture, Request $request,  EntityManagerInterface $manager)
     {
+      $form = $this->createForm(AdminFactureType::class , $facture);
 
-    }
+      $form->handleRequest($request);
+
+      if($form->isSubmitted()&& $form->isValid()){
+
+          $manager->persist($facture);
+          $manager->flush();
+
+          $this->addFlash(
+             
+             'success',
+             'la facture a été modifiée ! '
+
+          );
+
+          return $this->redirectToRoute('admin_factures_index');
+
+      }
+
+     return $this->render('admin_garage/factures/edit.html.twig',[
+
+          'facture'=> $facture,
+          'form' => $form->createView()
+
+    ]);
+ }
+    
 
      /**
      * @Route("/admin/factures/{id/}/delete", name="admin_factures_delete")
      */
     public function delete(Facture $facture, Request $request,  EntityManagerInterface $manager)
     {
-
+         $manager->remove($facture);
+         $manager->flush();
+         $this->addFlash ('success', 'la facture a été supprimé');
+         return $this->redirectToRoute('admin_factures_index');
     }
 }

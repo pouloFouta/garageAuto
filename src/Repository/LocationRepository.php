@@ -36,15 +36,20 @@ class LocationRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Location
+    /**
+     * 
+     * @return Location[] Returns an array of Location objects
+     */
+    
+    public function journalLocation($statut): ?Location
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
+            ->andWhere('l.statut_location = :val')
+            ->setParameter('loué', $statut)
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
+            //->getOneOrNullResult()
         ;
     }
-    */
+    
 }

@@ -15,15 +15,15 @@
 					<th>
 						Id</th>
 					<th>
-						vehicule</th>
+						Vehicule</th>
 					<th>
-						description</th>
+						Description</th>
 					<th>
-						date entrée</th>
+						Date entrée</th>
 					<th>
-						date sortie</th>
+						Date sortie</th>
 					<th>
-						statut</th>
+						Statut</th>
 
 
 					<th>
@@ -36,7 +36,7 @@
 
 					<tr>
 						<td>{{ reparation.id }}</td>
-						<td>{{ reparation.vehicule.immatriculation }}</td>
+						<td>{{ reparation.vehicule.immatriculation|upper }}</td>
 						<td>{{  reparation.description }}</td>
 						<td>{{ reparation.DateEntree|date("d/m/Y") }}</td>
 						<td>{{  reparation.DateSortie|date("d/m/Y") }}</td>
@@ -50,6 +50,10 @@
 							<a href="{{ path('admin_reparation_delete', {'id': reparation.id}) }}" class="btn btn-danger">
 								<i class="fas fa-trash"></i>
 							</a>
+							<a href="{{ path('admin_gestion_create', {'id': reparation.id}) }}" class="btn btn-warning">
+								Gérer
+							</a>
+							
 
 						</td>
 
@@ -67,6 +71,10 @@
 	<a href="{{path('admin_reparation_create')}}">
 		<button class="btn-success ml-5 ">
 			Enregistrer une réparation
+		</button>
+		<a href="{{path('admin_gestion_index')}}">
+		<button class="btn-success ml-5 ">
+			Journal des reparations
 		</button>
 	</a>
 {% endblock %}

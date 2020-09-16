@@ -19,18 +19,14 @@ class Piece
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text", length=255)
      */
     private $designation;
 
     
+   
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
-     */
-    private $prix_unitaire;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="piece")
+     * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="piece", cascade={"persist", "remove"})
      */
     private $ligneCommandes;
 
@@ -61,17 +57,7 @@ class Piece
 
    
 
-    public function getPrixUnitaire(): ?string
-    {
-        return $this->prix_unitaire;
-    }
-
-    public function setPrixUnitaire(string $prix_unitaire): self
-    {
-        $this->prix_unitaire = $prix_unitaire;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection|LigneCommande[]

@@ -11,14 +11,19 @@ use App\Entity\PasswordUpdate;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManager;
 use App\Form\PasswordUpdateType;
+use App\Form\ResetpasswordType;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\FormError;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 
 class AccountController extends AbstractController
 {
@@ -214,6 +219,129 @@ class AccountController extends AbstractController
      ]);
 }
     }
+
+
+    /**
+     * @Route("/account/forgottenPassword'" , name ="account_forgetPassword")
+     * 
+     */
+
+     public function forgottenPassword (Request $request, UserRepository $repo, \Swift_Mailer $mailer,
+     TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $manager)
+     {
+          // on lance le formulaire pour la saisie de l'email
+
+          $form= $this->createForm(ResetpasswordType::class);
+
+          // on traite la rêquete du formulaire
+
+           $form->handleRequest($request);
+
+           if($form->isSubmitted() && $form->isValid())
+           {
+                $infos= $form->getData();
+
+                // vérification d l'existence du user 
+
+                   $user = $repo->findOneByEmail($infos['email']);
+
+                   if(!$user)
+                   {
+                       $this->addFlash('danger', 'cette adresse email  n\'est pas' );
+
+                      return  $this->redirectToRoute('account_login');
+                   }
+
+                   // on crée un token
+
+                   $token = $tokenGenerator->generateToken();
+
+                   try 
+                   {
+                         $user->setResetToken($token);
+                         $manager = $this->getDoctrine()->getManager();
+                         $manager->persist($user);
+                         $manager->flush();
+                   }
+                   catch(\Exception $e)
+                   {
+                       $this->addFlash('warning', 'il y\'a erreur :'. $e->getMessage());
+                       return  $this->redirectToRoute('account_login');
+                   }
+                   // on génére l'url à envoyer par mail pour le reset du mot de passe
+
+                   $url = $this->generateUrl('account_reset_password',['token' => $token],
+                        UrlGeneratorInterface::ABSOLUTE_URL);
+
+                  // on envoie le message
+                  $message = (new \Swift_Message('oubli de mot de passe'))
+                              ->setFrom('alihou.bxl@gmail.com')
+                              ->setTo ($user->getEmail())
+                              ->setBody(
+                                 "<p>Bonjour </p> , <p> une demande de réinitialisation du mot de passe a été faite pour
+                                  pour le site de GarageBah . Veuillez cliquer sur le lien suivant : " .$url .'</p>','text/html'
+
+
+                              );
+
+                              $mailer->send($message);
+
+                              $this->addFlash('message' , 'un email de réinitialisation a été envoyé par mail');
+                              return  $this->redirectToRoute('account_login');
+
+           }
+           
+           return $this->render('account/forgottenPassword.html.twig', 
+        
+                     ['emailForm' => $form->createView()]);
+
+           
+           
+     }
+
+
+      /**
+       * @Route("/account/resetPassword/{token}", name="account_reset_password")
+       * 
+       */
+
+     public function resetPassword($token, Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
+
+     {
+        // on recherche le token dans l'entité User
+         
+          $user= $this->getDoctrine()->getRepository(User::class)->findOneBy(['reset_token' => $token]);
+
+        if(!$user)
+        {
+
+          $this->addFlash('danger' , 'Token inconnu');
+          return $this->redirectToRoute('account_login');
+        }
+         
+        // vérification de l'envoie du formulaire en post
+
+        if ($request->isMethod('POST'))
+        {
+           // on reset le token à null 
+           $user->setResetToken(null);
+
+           $user->setMotDePasse(
+               $encoder->encodePassword($user, $request->request->get('password')));
+               $manager = $this->getDoctrine()->getManager();
+               $manager->persist($user);
+               $manager->flush();
+
+               $this->addFlash('message', 'mot de passe modifié avec succès');
+
+               return $this->redirectToRoute('account_login');   
+        }
+        else
+        {
+            return $this->render('account/resetPassword.html.twig' , ['token' => $token]);
+
+        }
+     }
 }
 
 

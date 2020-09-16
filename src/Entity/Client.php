@@ -16,7 +16,7 @@ class Client extends User
     
 
     /**
-     * @ORM\ManyToOne(targetEntity="Groupe" ,inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="Groupe" ,inversedBy="clients")
      */
 
     private $groupe;
@@ -24,20 +24,20 @@ class Client extends User
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Vehicule" ,mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Vehicule" ,mappedBy="client")
      */
 
     private  $vehicules;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Location" ,mappedBy="user")
+   /**
+     * @ORM\OneToMany(targetEntity="Location" ,mappedBy="client")
      * 
      */
 
     private $locations;
 
     /**
-     * @ORM\OneToMany(targetEntity="Vente" ,mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Vente" ,mappedBy="client")
      */
 
     private $achats;
@@ -56,7 +56,7 @@ class Client extends User
     private $bons;
 
     /**
-     * @ORM\OneToMany(targetEntity=Facture::class, mappedBy="client")
+     * @ORM\OneToMany(targetEntity="App\Entity\Facture", mappedBy="client")
      */
     private $factures;
 
@@ -102,7 +102,7 @@ class Client extends User
     {
         if (!$this->vehicules->contains($vehicule)) {
             $this->vehicules[] = $vehicule;
-            $vehicule->setUser($this);
+            $vehicule->setClient($this);
         }
 
         return $this;
@@ -113,8 +113,8 @@ class Client extends User
         if ($this->vehicules->contains($vehicule)) {
             $this->vehicules->removeElement($vehicule);
             // set the owning side to null (unless already changed)
-            if ($vehicule->getUser() === $this) {
-                $vehicule->setUser(null);
+            if ($vehicule->getClient() === $this) {
+                $vehicule->setClient(null);
             }
         }
 
@@ -133,7 +133,7 @@ class Client extends User
     {
         if (!$this->locations->contains($location)) {
             $this->locations[] = $location;
-            $location->setUser($this);
+            $location->setClient($this);
         }
 
         return $this;
@@ -144,8 +144,8 @@ class Client extends User
         if ($this->locations->contains($location)) {
             $this->locations->removeElement($location);
             // set the owning side to null (unless already changed)
-            if ($location->getUser() === $this) {
-                $location->setUser(null);
+            if ($location->getClient() === $this) {
+                $location->setClient(null);
             }
         }
 
@@ -164,7 +164,7 @@ class Client extends User
     {
         if (!$this->achats->contains($achat)) {
             $this->achats[] = $achat;
-            $achat->setUser($this);
+            $achat->setClient($this);
         }
 
         return $this;
@@ -175,8 +175,8 @@ class Client extends User
         if ($this->achats->contains($achat)) {
             $this->achats->removeElement($achat);
             // set the owning side to null (unless already changed)
-            if ($achat->getUser() === $this) {
-                $achat->setUser(null);
+            if ($achat->getClient() === $this) {
+                $achat->setClient(null);
             }
         }
 
@@ -209,7 +209,7 @@ class Client extends User
     {
         if (!$this->bons->contains($bon)) {
             $this->bons[] = $bon;
-            $bon->setUser($this);
+            $bon->setClient($this);
         }
 
         return $this;
@@ -220,8 +220,8 @@ class Client extends User
         if ($this->bons->contains($bon)) {
             $this->bons->removeElement($bon);
             // set the owning side to null (unless already changed)
-            if ($bon->getUser() === $this) {
-                $bon->setUser(null);
+            if ($bon->getClient() === $this) {
+                $bon->setClient(null);
             }
         }
 
@@ -240,7 +240,7 @@ class Client extends User
     {
         if (!$this->factures->contains($facture)) {
             $this->factures[] = $facture;
-            $facture->setUser($this);
+            $facture->setClient($this);
         }
 
         return $this;
@@ -251,8 +251,8 @@ class Client extends User
         if ($this->factures->contains($facture)) {
             $this->factures->removeElement($facture);
             // set the owning side to null (unless already changed)
-            if ($facture->getUser() === $this) {
-                $facture->setUser(null);
+            if ($facture->getClient() === $this) {
+                $facture->setClient(null);
             }
         }
 

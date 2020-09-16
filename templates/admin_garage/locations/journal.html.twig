@@ -1,0 +1,119 @@
+{% extends 'admin_garage/base.html.twig' %}
+
+{% block title %} les locations  {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+		<h1 class="my-5">
+			Journal des locations</h1>
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					
+					<th>
+						Vehicule</th>
+					
+					<th>
+						Image</th>
+					<th>
+						Statut location</th>
+						<th>
+						Date location</th>
+
+					<th>
+						Prix/jour</th>
+                        <th> Nombre de Jours </th>
+                        <th> Total</th>
+
+						<th> client </th>
+					
+
+
+					<th>
+						Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for uneLocation in journal %}
+
+					<tr>
+						
+						<td>{{ uneLocation.vehicule.marque }} {{  uneLocation .vehicule.modele }}  </td>
+						 {# on va chercher l'image du véhicule depuis le dossier oploads et grâce à la balise src en html 
+						    on peut afficher l'image .
+							la DB stocke juste le nom de l'image
+						  #}
+						<td><img src="/uploads/{{ uneLocation.vehicule.imageVehicule }}" alt="photo véhicule"</td>
+						<td>{{  uneLocation.statutLocation}}</td>
+						<td>{{  uneLocation.dateLocation|date("d/m/Y")}}</td>
+                        <td>{{ uneLocation.prix ~ ' €/jour' }}</td>
+                              
+
+					
+						   {#{% if  uneLocation .statutLocation == 'loué' %}#}
+                           <td> {{  uneLocation.nbJours }} </td>
+                            
+                            
+                           <td>{{  uneLocation.prix * uneLocation.nbJours  ~ '€' }}</td>
+                           <td> {{ uneLocation.client}} </td>
+						   
+                           {#{% else %}
+                           <td> {{ 0 }}
+                            
+                            
+                           <td>{{ 0 ~ '€' }}</td>
+                           <td> {{ 'aucun' }} </td>#}
+						   
+                               
+						  {# {% endif %}#}
+						  
+
+		
+							  
+								 
+					
+						
+						
+						
+
+
+
+						<td>
+							<a href="#" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="#" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+
+						</td>
+
+					</tr>
+
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+
+	</div>
+
+	<a href="{{path('admin_locations_create')}}">
+		<button class="btn-success ml-5 ">
+			Ajouter une location
+		</button>
+	</a>
+	<a href="{{path('admin_locations_journal')}}">
+		<button class="btn-success ml-5 ">
+			journal  des locations
+		</button>
+	</a>
+
+	
+{% endblock %}
+
+

@@ -24,7 +24,8 @@ class Commande
     private $date_commande;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * ce champ est encodé quand la commande est reçu avec le Total mis par le fournisseur
+     * @ORM\Column(type="decimal", precision=10, scale=0 ,nullable=true)
      */
     private $total;
 
@@ -49,7 +50,7 @@ class Commande
       private $fournisseur;
 
       /**
-       * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="commande")
+       * @ORM\OneToMany(targetEntity="App\Entity\LigneCommande", mappedBy="commande",cascade={"persist", "remove"})
        */
       private $ligneCommandes;
 

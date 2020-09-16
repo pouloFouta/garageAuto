@@ -1,0 +1,127 @@
+{% extends "admin_garage/base.html.twig" %}
+
+{% block title %}  ajouter un commande de pièces  {% endblock %}
+
+{% form_theme form _self %}
+{% block body %}
+
+<div class="container">
+<h1> Créer une commande de pièces </h1>
+
+{{form_start(form)}}
+{{form_widget(form)}}
+<button type ="submit" class="btn btn-success"> enregistrer </button>
+{{form_end(form)}}
+
+</div>
+    
+{% endblock %}
+
+{% block _admin_commande_ligneCommandes_widget %}
+ <h4> <strong> Ajouter une ligne de commande </strong>  </h4>
+ {{ form_widget(form) }}
+
+ <div class="form-group">
+
+          <button type="button" id="add-ligne" class ="btn btn-primary"> Ajouter une ligne </button>
+</div>
+ 
+
+{% endblock %}
+
+{% block  _admin_commande_ligneCommandes_entry_row %}
+
+
+ {{ form_widget(form) }}
+
+{% endblock %}
+
+{% block _admin_commande_ligneCommandes_entry_widget  %}
+
+<div class="form-group" id="block_{{id}}">
+
+		<div class="row">
+
+			<div class="col-10">
+				<div class="row">
+					<div class="col">
+					 {{ form_label(form.piece ,'Pièce') }}
+						{{ form_widget(form.piece) }}
+					</div>
+					<div class="col">
+					  {{ form_label(form.quantite,'Quantité') }}
+						{{ form_widget(form.quantite) }}
+					</div>
+					
+
+				</div>
+
+			</div>
+			<div  class="col-2">
+				<button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+
+
+			</div>
+		</div>
+
+	</div>
+
+	
+
+{% endblock %}
+
+{% block  _admin_commande_ligneCommandes_piece_widget %}
+
+ form_widget (form.designation)
+{% endblock %}
+
+{% block javascripts %}
+
+
+	<script>
+
+		$('#add-ligne').click(function () { 
+                        
+                        // num des champs suivants
+
+const nbp = $('#admin_commande_ligneCommandes div.form-group').length;
+
+
+// récuperer le prototype des entrées
+
+const temp = $('#admin_commande_ligneCommandes').data('prototype').replace(/__name__/g, nbp);
+
+// console.log(temp);
+
+// mettre le code dans la Div de la collection des pannes
+
+$('#admin_commande_ligneCommandes').append(temp);
+
+ // Appel de la fonction pour supprimer une panne si possible à chaque affichage du formulaire
+gererLigne();
+
+});
+
+// console.log(temp);
+
+function gererLigne() {
+
+$('button[data-action="delete"]').click(function () {
+
+const cible = this.dataset.target;
+
+console.log(cible);
+
+$(cible).remove();
+
+});
+
+
+}
+
+// appel de la fonction également pour l'édition du du formulaire
+gererLigne();
+	</script>
+
+
+{% endblock %}

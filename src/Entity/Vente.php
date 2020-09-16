@@ -29,10 +29,10 @@ class Vente
     private $montant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User" ,inversedBy="achats")
+     * @ORM\ManyToOne(targetEntity="Client" ,inversedBy="achats")
      */
 
-    private $user;
+    private $client;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Vehicule", inversedBy="vente", cascade={"persist", "remove"})
@@ -75,14 +75,14 @@ class Vente
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getClient(): ?Client
     {
-        return $this->user;
+        return $this->client;
     }
 
-    public function setUser(?User $user): self
+    public function setClient(?Client $client): self
     {
-        $this->user = $user;
+        $this->client = $client;
 
         return $this;
     }

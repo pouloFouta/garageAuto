@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,9 +18,10 @@ class GestionVehicule
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="text")
+     * @Assert\NotBlank (message=" vous devez indiquer l'action faite")
      */
-    private $nb_jours_passes;
+    private $commentaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Reparation", inversedBy="gestionVehicules")
@@ -44,14 +46,14 @@ class GestionVehicule
         return $this->id;
     }
 
-    public function getNbJoursPasses(): ?int
+    public function getCommentaire(): ?string
     {
-        return $this->nb_jours_passes;
+        return $this->commentaire;
     }
 
-    public function setNbJoursPasses(int $nb_jours_passes): self
+    public function setCommentaire(string $commentaire): self
     {
-        $this->nb_jours_passes = $nb_jours_passes;
+        $this->commentaire = $commentaire;
 
         return $this;
     }

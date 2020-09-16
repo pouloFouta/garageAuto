@@ -19,22 +19,22 @@ class VenteRepository extends ServiceEntityRepository
         parent::__construct($registry, Vente::class);
     }
 
-    // /**
-    //  * @return Vente[] Returns an array of Vente objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+     * @return Vente[] Returns an array of Vente objects
+      */
+    
+    public function findByStatut($value)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
+        return $this->createQueryBuilder('v')
+            ->andWhere('v.statutVente = :val')
             ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
+            ->orderBy('v.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
     /*
     public function findOneBySomeField($value): ?Achat

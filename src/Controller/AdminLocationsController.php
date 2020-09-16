@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Location;
 use App\Form\AdminLocationType;
+use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,10 +13,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * 
- * @IsGranted("ROLE_ADMIN")
- */
+
 
 
 class AdminLocationsController extends AbstractController
@@ -36,6 +34,34 @@ class AdminLocationsController extends AbstractController
     }
 
     /**
+     * 
+     * afficher le journal des locations
+     * 
+     * @Route ("admin/locations/journal", name="admin_locations_journal")
+     */
+    
+    public function journalLocations(LocationRepository $repo)
+    {
+ 
+       // $statut = "loué";
+        //$repo = $this->getDoctrine()->getRepository(Location::class);
+        /*$journal = $repo->journalLocation();
+        return $this->render('admin_garage/locations/journal.html.twig', [
+            'journal' => $journal*/
+        //]);
+
+        $journal = $repo->findBy(array('statutLocation' => 'loué'),
+                                     array('date_location' => 'desc'),
+                                     5,
+                                     0);
+        return $this->render('admin_garage/locations/journal.html.twig', [
+                                        'journal' => $journal
+                                        ]);
+    }
+
+    /**
+    *
+     * @IsGranted("ROLE_ADMIN")
      * pour enregister une location
      * 
      * @Route("/admin/locations/add", name ="admin_locations_create")
@@ -116,7 +142,8 @@ class AdminLocationsController extends AbstractController
    }
 
 
-  /**
+    /**
+     * @IsGranted("ROLE_ADMIN")
      * pour modifier une location
      * 
      * @Route("admin/locations/{id}/edit", name ="admin_locations_edit")
@@ -202,6 +229,7 @@ class AdminLocationsController extends AbstractController
    }
 
     /**
+     *  @IsGranted("ROLE_ADMIN")
      * pour supprimer une location
      * 
      * @Route("admin/locations/{id}/delete", name ="admin_locations_delete")

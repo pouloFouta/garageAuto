@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Location;
 use App\Entity\Vente;
+use App\Entity\Location;
+use App\Repository\VenteRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -42,11 +43,11 @@ class AccueilController extends AbstractController
      /**
      * @Route("/ventes", name="ventes")
      */
-    public function ventes()
+    public function ventes(VenteRepository $repo)
       
     {
-        $repo = $this->getDoctrine()->getRepository(Vente::class);
-        $ventes = $repo->findAll();
+        //$repo = $this->getDoctrine()->getRepository(Vente::class);
+        $ventes = $repo->findByStatut('libre');
 
         
     return $this->render('vente.html.twig', [
