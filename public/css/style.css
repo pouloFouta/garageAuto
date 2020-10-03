@@ -9,7 +9,7 @@ th, td {
     background-color: aliceblue;
   }
 
-   h2 , h3
+  h2 , h3 
   {
     font-size: 24px;
   text-shadow: -1px -1px #eee, 1px 1px #888, -3px 0 4px #000;
@@ -36,7 +36,7 @@ th, td {
  
   
   input[type=text], textarea {
-    width: 50%;
+    width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -100,3 +100,21 @@ th, td {
     margin-bottom:15px;
   }
    
+  h1, .w3-myfont {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    margin-left: 10px ;
+   ;
+    
+  }
+
+  nav li a {
+
+    font-family:palatino linotype, sans-serif;
+ font-size:100%;
+  }
+  
+  
+  
+
+  
+  

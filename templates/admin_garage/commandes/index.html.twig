@@ -12,6 +12,7 @@
     <tr>
         <th> Id</th>
         <th> Date commande</th>
+            {#<th> Pièce(s)</th>#}
         <th> Etat</th>
         <th> Fournisseur</th>
         {#<th> Téléphone </th>#}
@@ -25,6 +26,14 @@
 <tr>
     <td>{{ commande.id }}</td>
     <td>{{  commande.dateCommande|date("d/m/Y") }}</td>
+       {#<td>
+       <ul>
+             {% for unepiece in commande.ligneCommandes %}
+        <li>{{ unepiece }}</li>
+            {% endfor %}
+</ul>
+       
+       </td>#}
     <td>{{ commande.etat }}</td>
     <td>{{  commande.fournisseur }}</td>
    

@@ -9,18 +9,18 @@
 <div class="class container">
 <h2 class ="my-3"> listes des véhicules à louer </h2>
 <div class=" row">
-{% for location in locations %}
+{% for miseLocation in miseLocations %}
 <div class="col-md-4">
 
  <div class="card bg-light mb-3">
  <div class="card-header text-center">
- {{ location.vehicule.marque }} {{ location.vehicule.modele }} <br>
- <small> {{ location.prix ~ '€/jour' }} </small>
+ {{ miseLocation.vehicule.marque }} {{ miseLocation.vehicule.modele }} <br>
+ <small> {{ miseLocation.prixParJour ~ '€/jour' }} </small>
  
  
  </div>
 
- <img src="/uploads/{{ location.vehicule.imageVehicule }}" alt="une image" 
+ <img src="/uploads/{{ miseLocation.vehicule.imageVehicule }}" alt="une image" 
  
  style="height: 200px; width: 100%; display:block">
 
@@ -30,25 +30,25 @@
  </h4>
 <p class="card-text"> 
 
-année: {{location.vehicule.anneeFabrication|date("Y")}} <br>
-carburant: {{location.vehicule.carburant}} <br>
-kilometrage: {{location.vehicule.kilometrageActuel ~ ' km'}} <br>
-transmission: {{location.vehicule.transmission}} <br>
-puissance: {{location.vehicule.puissance ~ 'cv'}} <br>
-options: {{location.vehicule.options}} <br>
-nombre de portes : {{location.vehicule.nbPortes}}
+année: {{miseLocation.vehicule.anneeFabrication|date("Y")}} <br>
+carburant: {{miseLocation.vehicule.carburant}} <br>
+kilometrage: {{miseLocation.vehicule.kilometrageActuel ~ ' km'}} <br>
+transmission: {{miseLocation.vehicule.transmission}} <br>
+puissance: {{miseLocation.vehicule.puissance ~ 'cv'}} <br>
+options: {{miseLocation.vehicule.options}} <br>
+nombre de portes : {{miseLocation.vehicule.nbPortes}}
 
 
 </p>
 
-{#{% if location.statutLocation == 'loué' %}#}
+{#{% if miseLocation.statutMise == 'loué' %}
 
-{#<a href="#" class="btn btn-secondary"> réserver</a>#}
+<a href="#" class="btn btn-secondary"> réserver</a>
 
-{#{% else %}#}
+{% else %}#}
   
 
-<a href="{{path('client_locations_louer', {'id':location.id}) }}" class="btn btn-secondary"> louer</a>
+<a href="{{path('client_locations_louer', {'id':miseLocation.id}) }}" class="btn btn-secondary"> louer</a>
 
 {#{% endif %}#}
 

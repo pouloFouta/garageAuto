@@ -1,0 +1,72 @@
+{% extends 'account/base.html.twig' %}
+
+{% block title %} listes de mes locations !{% endblock %}
+
+{% block body %}
+   
+
+
+<div class="class container">
+<h2 class ="my-3">listes de mes locations  </h2>
+<div class=" row">
+{% for location in mesLocations %}
+<div class="col-md-4">
+
+ <div class="card bg-light mb-3">
+ <div class="card-header text-center">
+ {{ location.vehicule.marque }} {{ location.vehicule.modele }} <br>
+ 
+ 
+ 
+ </div>
+
+ <img src="/uploads/{{ location.vehicule.imageVehicule }}" alt="une image" 
+ 
+ style="height: 200px; width: 100%; display:block">
+
+ <div class="card-body">
+ <h4 class="card-title">
+   Détails de la location
+ </h4>
+<p class="card-text"> 
+ {{ location.dateLocation|date("d/m/Y") ~ '-'}} {{ location.dateFin|date("d/m/Y")}} </p>
+  <small> TTC payé : <strong> {{ location.prix ~ '€' }}  </strong> </small>
+  
+
+
+
+
+
+ 
+ </div>
+ 
+ 
+ 
+ </div>
+
+
+</div>   
+{% endfor %}
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+
+
+
+
+
+{% endblock %}

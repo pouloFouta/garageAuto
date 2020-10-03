@@ -11,30 +11,18 @@
 
 <h1 class ="text-center"> Modifier une location </h1>
 
-{{ form_start(form) }}
-
-{{form_row(form.prix)}}
-{{form_row(form.statut_location)}}
-{{form_row(form.vehicule.numero_chassis)}}
-{{form_row(form.vehicule.marque)}}
-{{form_row(form.vehicule.modele)}}
-{{form_row(form.vehicule.anneeFabrication)}}
-{{form_row(form.vehicule.couleur)}}
-{{form_row(form.vehicule.carburant)}}
-{{form_row(form.vehicule.kilometrage_actuel)}}
-{{form_row(form.vehicule.nbPortes)}}
-{{form_row(form.vehicule.transmission)}}
-{{form_row(form.vehicule.puissance)}}
-{{form_row(form.vehicule.options)}}
-
-
- {{form_row(form.vehicule.imageFichier)}}
-
- <button type ="submit" class="btn btn-success"> Mettre à jour </button>
-
-{{ form_end(form) }}
+{{form_start(form)}}
+{{form_widget(form)}}
+<button type ="submit" class="btn btn-success"> mettre à jour </button>
+{{form_end(form)}}
 
 </div>
+ 
+
+
+
+
+ 
     
 {% endblock %}
 {% block javascripts  %}

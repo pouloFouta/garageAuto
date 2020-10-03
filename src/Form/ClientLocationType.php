@@ -18,27 +18,16 @@ class ClientLocationType extends AbstractType
             ->add('date_location',null,[
                 'label' => 'Date location',
                 'widget' => 'single_text',
-                'data' => new DateTime('now', new DateTimeZone('Europe/Brussels'))
+                //'data' => new DateTime('now', new DateTimeZone('Europe/Brussels'))
             ])
-            ->add('nb_jours', ChoiceType::class,[
+            ->add('date_fin',null,[
+                'label' => 'Date de fin ',
+                'widget' => 'single_text',
+                //'data' => new DateTime('now', new DateTimeZone('Europe/Brussels'))
 
-                'choices'=> [
-                   '1' => '1',
-                   '2' => '2',
-                   '3' => '3',
-                   '4' => '4',
-                   '5' => '5',
-                   '6' => '6',
-                   '7' => '7',
-
-
-                ],
-
-                'label' => 'nombre de jours'
+               
             ])
-            //->add('prix')
-            //->add('statutLocation')
-            //->add('client')
+           
             ->add('vehicule')
         ;
     }

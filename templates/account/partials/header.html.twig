@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-lg navbar navbar-primary bg-dark">
+<nav class="navbar navbar-expand-lg navbar navbar-primary bg-light sticky-top">
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto"> 
             <li class="nav-item active">
@@ -13,19 +13,22 @@
                 <a class="nav-link" href="{{path('client_ventes_index')}}">Acheter un véhicule </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('reparation') }}"> Mes réparations </a>
+                <a class="nav-link" href="{{ path('client_reparations') }}"> Mes réparations </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href=""> Mes locations </a>
+                <a class="nav-link" href="{{path('client_locations')}}"> Mes locations </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{path('client_achats')}}"> Mes achats </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('factures') }}">Mes factures</a>
+                <a class="nav-link" href="{{ path('client_factures') }}">Mes factures</a>
             </li>
 
-            <li class="nav-item">
+            {#<li class="nav-item">
                 <a class="nav-link" href="#"> Mes bons de réparations </a>
-            </li>
+            </li>#}
          </ul>
         
 

@@ -25,7 +25,7 @@ class Groupe
 
 
     /**
-     * @ORM\OneToMany(targetEntity="User" ,mappedBy="groupe")
+     * @ORM\OneToMany(targetEntity="Client" ,mappedBy="groupe")
      */
 
     private $clients;

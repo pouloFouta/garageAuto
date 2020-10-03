@@ -17,7 +17,7 @@
 						Libellé</th>
 					
 					<th>
-						date d'émission</th>
+						Date d'émission</th>
 					
 					<th>
 						TVA</th>
@@ -47,14 +47,14 @@
 						
                         <td>{{facture.dateFacture |date("d/m/Y") }}</td>
                         <td> {{facture.tva}}   </td>
-						<td> {{facture.montant}}   </td>
+						<td> {{facture.montantHorsTVA  ~ ' €' }}   </td>
 
 
 					
 						   
-                           <td> {{(facture.tva  *  facture.montant + facture.montant) ~ ' €'  }}</td>
+                           <td> {{facture.montant ~ ' €'   }}</td>
                             
-                            
+                            {#|round(1,'common')#}
                       
                            <td> {{facture.client}} </td>
 						    <td> {{facture.estPaye}} </td>
@@ -80,7 +80,7 @@
 							<a href="{{ path('admin_factures_delete', {'id': facture.id}) }}" class="btn btn-danger">
 								<i class="fas fa-trash"></i>
 							</a>
-							<a href="" class="btn btn-info">
+							<a href="{{ path('admin_factures_pdf' , {'id':facture.id}) }}" class="btn btn-info">
 								version pdf
 							</a>
 

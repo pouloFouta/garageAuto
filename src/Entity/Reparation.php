@@ -80,7 +80,6 @@ class Reparation
     * @ORM\JoinColumn(nullable=false)
     * @ORM\JoinColumn(onDelete="CASCADE")
     * @Assert\Valid
-
     */
    private $vehicule;
 

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vente;
 use App\Entity\Location;
+use App\Entity\MiseEnLocation;
 use App\Repository\VenteRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,7 @@ class AccueilController extends AbstractController
      */
     public function location()
     {
-        $repo = $this->getDoctrine()->getRepository(Location::class);
+        $repo = $this->getDoctrine()->getRepository(MiseEnLocation::class);
         $locations = $repo->findAll();
 
         

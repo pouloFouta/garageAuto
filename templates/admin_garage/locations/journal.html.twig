@@ -23,11 +23,11 @@
 						Date location</th>
 
 					<th>
-						Prix/jour</th>
-                        <th> Nombre de Jours </th>
-                        <th> Total</th>
+						Date fin</th>
+                      
+                        <th> Total à payer</th>
 
-						<th> client </th>
+						<th> Client </th>
 					
 
 
@@ -47,17 +47,19 @@
 							la DB stocke juste le nom de l'image
 						  #}
 						<td><img src="/uploads/{{ uneLocation.vehicule.imageVehicule }}" alt="photo véhicule"</td>
-						<td>{{  uneLocation.statutLocation}}</td>
+						<td>{{  uneLocation.MiseEnLocation.statutMise}}</td>
 						<td>{{  uneLocation.dateLocation|date("d/m/Y")}}</td>
-                        <td>{{ uneLocation.prix ~ ' €/jour' }}</td>
+						<td> {{  uneLocation.dateFin|date("d/m/Y") }} </td>
+                      
                               
 
 					
 						   {#{% if  uneLocation .statutLocation == 'loué' %}#}
-                           <td> {{  uneLocation.nbJours }} </td>
+                           
                             
                             
-                           <td>{{  uneLocation.prix * uneLocation.nbJours  ~ '€' }}</td>
+                           {#<td>{{  uneLocation.prix * uneLocation.nbJours  ~ '€' }}</td>#}
+						   <td>{{uneLocation.prix ~ ' €'}}</td>
                            <td> {{ uneLocation.client}} </td>
 						   
                            {#{% else %}
@@ -82,7 +84,7 @@
 
 
 						<td>
-							<a href="#" class="btn btn-primary">
+							<a href="{{ path('admin_locations_edit', {'id': uneLocation.id}) }}" class="btn btn-primary">
 								<i class="fas fa-edit"></i>
 							</a>
 							<a href="#" class="btn btn-danger">
@@ -101,17 +103,6 @@
 
 
 	</div>
-
-	<a href="{{path('admin_locations_create')}}">
-		<button class="btn-success ml-5 ">
-			Ajouter une location
-		</button>
-	</a>
-	<a href="{{path('admin_locations_journal')}}">
-		<button class="btn-success ml-5 ">
-			journal  des locations
-		</button>
-	</a>
 
 	
 {% endblock %}

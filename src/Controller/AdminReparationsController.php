@@ -20,6 +20,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminReparationsController extends AbstractController
 {
     /**
+     * Afficher les réparaations
+     * 
      * @Route("/admin/reparations", name="admin_reparations_index")
      * 
      *   @return Reparation[] Returns an array of Reparation objects
@@ -53,7 +55,7 @@ class AdminReparationsController extends AbstractController
 
         $ve = new Vehicule();
 
-        $client = new Client();
+        //$client = new Client();
         
         
     
@@ -89,7 +91,7 @@ class AdminReparationsController extends AbstractController
             //on récupère le client depuis le véhicule et on le persiste 
 
             $client = $ve->getClient();
-            $manager->persist($client);
+            //$manager->persist($client);
     
       
             $manager->persist($client);

@@ -25,7 +25,7 @@ class AdminFactureType extends AbstractType
 
             ])
             ->add('TVA')
-            ->add('montant',null,[
+            ->add('montantHorsTVA',null,[
                'label' => 'Montant hors TVA'
 
             ])

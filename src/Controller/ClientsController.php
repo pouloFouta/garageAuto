@@ -8,7 +8,10 @@ use App\Entity\Vente;
 use App\Entity\Client;
 use App\Entity\Location;
 use App\Entity\Personne;
+use App\Entity\MiseEnLocation;
 use App\Form\ClientLocationType;
+use App\Repository\LocationRepository;
+use App\Repository\ReparationRepository;
 use App\Repository\VenteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,16 +73,7 @@ public function achatVehicule(Vente $vente, EntityManagerInterface $manager)
       
        $vente->setStatutVente('reservé pour achat');
        $vente->setClient($client);
-        
-       
-
-     
-     
-
-    
-
-      
-
+       $vente->setDateVente(new \DateTime());
     
     
     $manager->persist($vente);
@@ -101,9 +95,10 @@ public function achatVehicule(Vente $vente, EntityManagerInterface $manager)
  */
 
 
-public function louerVehicule( Request $request,Location $location, EntityManagerInterface $manager  )
+public function louerVehicule( Request $request, MiseEnLocation $miseLocation, EntityManagerInterface $manager  )
 
 {
+     $location = new Location();
     $form= $this->createForm(ClientLocationType::class);
 
     $form->handleRequest($request);
@@ -114,37 +109,92 @@ public function louerVehicule( Request $request,Location $location, EntityManage
 
 
     $client = $this->getUser();
+
+   
+
     if ($client instanceof Client)
     {
    $location->setClient($client);
-   //$vehicule = $location->getVehicule();
-   //$location->setStatutLocation('loué');
-   $jours= $form->get('nb_jours')->getData();
-   // méthode pour récupérer la donnée dans un formulaire
-   $date= $form->get('date_location')->getData();
+   $location->setMiseEnLocation($miseLocation);
 
-   $location->setNbJours($jours);
-   $location->setDateLocation($date);
+    $dateDebut= $form->get('date_location')->getData();
+   $dateFin= $form->get('date_fin')->getData();
+   
+   $nbjours = $dateFin->diff($dateDebut)->format("%a");
+
+   $location->setDateLocation($dateDebut);
+   $location->setDateFin($dateFin);
+   $location->setVehicule($miseLocation->getVehicule());
+   $prixTTc= $miseLocation->getPrixParJour() * $nbjours;
+   $location->setPrix($prixTTc);
+   $location->setMiseEnLocation($miseLocation);
 
    $meslocations[]=$location;
    $client->addLocation($location);
-  
+   $miseLocation->setStatutMise('reservé');
 
+   
+   //$vehicule = $location->getVehicule();
+   //$location->setStatutLocation('loué');
+
+   //si les dates choisis pour la location sont déja occupés
+     if(!$location->verificationDatesLocations())
+   
+         {
+             $this->addFlash(
+
+                'warning',
+                "les dates choisies sont déja réservées par autre un client."
+             );
+         }
+         else
+     {
+  
+   
+   // méthode pour récupérer la donnée dans un formulaire
+   //$dateDebut= $form->get('date_location')->getData();
+   //$dateFin= $form->get('date_fin')->getData();
+   // calcule du nombre de jours de la location
+   /*$jours= ceil(abs($dateFin - $dateDebut) / 86400);
+
+   $location->setDateFin($dateDebut);
+   $location->setDateLocation($dateFin);
+   $location->setVehicule($miseLocation->getVehicule());
+   $prixTTc= $miseLocation->getPrixParJour() * ($jours);
+   $location->setPrix($prixTTc);
+   $location->setMiseEnLocation($miseLocation);
+
+   $meslocations[]=$location;
+   $client->addLocation($location);
+   $miseLocation->setStatutMise('loué');*/
+
+   
+  
    $manager->persist($location);
+   $manager->persist($miseLocation);
    $manager->flush();
+   $this->addFlash(
+
+    'success',
+
+    "votre location a été enregistrée"
+
+);
+
     }
     dump($location);
     
-
+}
    return $this->redirectToRoute('client_locations_index');
     
     
 
-    }
+    
+}
 
 return $this->render('client_locations/new.html.twig',[
 
-            'location' => $location,
+            //'location' => $location,
             //'vehicule'  => $vehicule,
            
             'form' => $form->createView()
@@ -158,7 +208,7 @@ return $this->render('client_locations/new.html.twig',[
 
 
 /**
- * permet de lister les locations du client
+ * permet de lister les locations 
  * @Route("/clients/locations", name="client_locations_index")
  * 
  */
@@ -166,32 +216,94 @@ return $this->render('client_locations/new.html.twig',[
 public function listeLocations ()
 {
     //requête sql sur location pour récupérer seul les locations du client
-    $repo = $this->getDoctrine()->getRepository(Location::class);
-    $locations = $repo->findAll();
+    $repo = $this->getDoctrine()->getRepository(MiseEnLocation::class);
+
+    $miseLocations = $repo->findAll();
+    /*$miseLocations = $repo->findBy(
+        ['client' => $this->getUser()],
+    ['id' => 'ASC']
+);*/
+
 
     
 return $this->render('client_locations/index.html.twig', [
-    'locations' => $locations
+    'miseLocations' => $miseLocations
 ]);
-
-
 }
+
+/**
+ * 
+ * Liste des Mises en Localions en statut Libre
+ */
+
+/*public function listeMisesLocation(MiseEnLocation $repo)
+{
+
+   
+}
+*/
+
+  /**
+   *  permet d'afficher ls factures du client
+   *  @Route("/clients/reparations", name="client_factures")
+   */
 
 public function lesFactures() 
 {
-
+  
 
 }
 
 /**
  * permet de lister les réparations du client
  * 
+ * @Route("/clients/reparations", name="client_reparations")
  *
  * @return void
  */
-public function mesReparations()
+public function mesReparations(ReparationRepository $repo)
 {
+   
+    //$mesReparations = $repo->findByVehicule($this->g->getId()) ;   
+
+    /*return $this->render('client_reparations/mesReparations.html.twig', [
+            'mesLocations' => $mesLocations
+        ]);*/
+}
+
+
+/**
+ * 
+ *
+ * permet de lister les locations du client
+ * @Route("/clients_locations/mesLocations", name="client_locations")
+ *
+ */
+
+public function mesLocations( LocationRepository $repo)
+
+{
+     $mesLocations = $repo->findByClient($this->getUser()->getId()) ;   
+
+return $this->render('client_locations/mesLocations.html.twig', [
+        'mesLocations' => $mesLocations
+    ]);
+}
+
+/**
+ * permet de lister les achats du client
+ * @Route("/clients_locations/mesAchats", name="client_achats")
+ * 
+ */
+
+public function mesAchats(VenteRepository $repo)
+{
+    $mesAchats = $repo->findByClient($this->getUser()->getId()) ;   
+
+    return $this->render('client_ventes/mesAchats.html.twig', [
+            'mesAchats' => $mesAchats
+        ]);
+    }
 
 }
 
-}

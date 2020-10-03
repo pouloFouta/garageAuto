@@ -1,0 +1,72 @@
+{% extends 'account/base.html.twig' %}
+
+{% block title %} listes de mes achats !{% endblock %}
+
+{% block body %}
+   
+
+
+<div class="class container">
+<h2 class ="my-3">listes de mes achats  </h2>
+<div class=" row">
+{% for achat in mesAchats %}
+<div class="col-md-4">
+
+ <div class="card bg-light mb-3">
+ <div class="card-header text-center">
+ {{ achat.vehicule.marque }} {{ achat.vehicule.modele }} <br>
+ 
+ 
+ 
+ </div>
+
+ <img src="/uploads/{{ achat.vehicule.imageVehicule }}" alt="une image" 
+ 
+ style="height: 200px; width: 100%; display:block">
+
+ <div class="card-body">
+ <h4 class="card-title">
+   Détails de l'achat
+ </h4>
+<p class="card-text"> 
+ {{ achat.dateVente|date("d/m/Y") }}</p>
+  <small> TTC payé : <strong> {{ achat.montant ~ '€' }}  </strong> </small>
+  
+
+
+
+
+
+ 
+ </div>
+ 
+ 
+ 
+ </div>
+
+
+</div>   
+{% endfor %}
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+
+
+
+
+
+
+{% endblock %}

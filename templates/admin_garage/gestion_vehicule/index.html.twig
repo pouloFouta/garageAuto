@@ -7,7 +7,7 @@
 <div class="container-fluid">
 
 		<h1 class="my-5">
-		Journal d'activités de la réparation</h1>
+		Journal d'activités des réparations</h1>
 
 		<table class="table table-hover">
 			<thead>
@@ -23,11 +23,14 @@
 						Reparateur</th>
 					<th>
 						Commentaires</th>
+						<th>
+						Actions</th>
+                        
                         
 						
 					
 
-
+  
 					{#<th>
 						Actions</th>#}
 				</tr>
@@ -61,15 +64,13 @@
 
 
 
-						{#<td>
-							<a href=" " class="btn btn-primary">
+						<td>
+							<a href="{{path('admin_gestion_edit', {'id': gestion.id}) }}" class="btn btn-primary"> 
 								<i class="fas fa-edit"></i>
 							</a>
-							<a href="">
-								<i class="fas fa-trash"></i>
-							</a>
+							
 
-						</td>#}
+						</td>
 
 					</tr>
 
@@ -82,12 +83,7 @@
 
 	</div>
 
-	<a href="">
-		<button class="btn-success ml-5 ">
-        {#l'idée est ici de cliquer sur ce bouton afin que la réparation passe au statut terminé#}
-			clôturer la gestion de la réparation 
-		</button>
-	</a>
+	
 
 	
 {% endblock %}

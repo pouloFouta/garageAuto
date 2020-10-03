@@ -9,9 +9,9 @@
 
 
 <div class="container">
-<div class="jumbotron mt-3">
+<div class="jumbotron ">
   <h1 class=>Bienvenue chez Garage Bah!</h1>
-  <p class="lead"> Des services de qualités à meilleur prix</p>
+  <p class="lead"> Des services de qualité à meilleur prix</p>
   <hr class="my-4">
  
   <p class="lead">
@@ -23,12 +23,12 @@
 <div>
 <img src="/img/banniere.png" alt="image">
 
-<button type="button" class="btn btn-outline-primary btn-lg ml-3"> Réparations</button></div>
+<a href="{{path('entretien')}}"><button type="button" class="btn btn-outline-primary btn-lg ml-3"> Réparations</button> </a></div> 
 
 <div>
-<img src="/img/vente.png" alt="image"><button type="button" class="btn btn-outline-secondary btn-lg ml-3">ventes véhicules</button></div>
+<a href="{{path('ventes')}}"><img src="/img/vente.png" alt="image"><button type="button" class="btn btn-outline-secondary btn-lg ml-3">ventes véhicules</button></a></div>
 <div>
-<img src="/img/location.png" alt="image"><button type="button" class="btn btn-outline-success btn-lg ml-3">location véhicules</button></div>
+<a href="{{path('location')}}"><img src="/img/location.png" alt="image"><button type="button" class="btn btn-outline-success btn-lg ml-3">location véhicules</button></a></div>
 
 </div>
    

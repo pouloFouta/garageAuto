@@ -1,0 +1,119 @@
+{% extends 'admin_garage/base.html.twig' %}
+
+{% block title %} les mises en locations  {% endblock %}
+
+{% block body %}
+<div class="container-fluid">
+
+		<h1 class="my-5">
+			Gestion des mises en locations</h1>
+
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>
+						Id</th>
+					<th>
+						Vehicule</th>
+					
+					<th>
+						Image</th>
+					{#<th>
+						Statut location</th>#}
+					<th>
+						Prix/jour</th>
+                        
+                       
+
+						
+					
+
+
+					<th>
+						Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for miseLocation in miseLocations %}
+
+					<tr>
+						<td>{{  miseLocation.id }}</td>
+						<td>{{ miseLocation.vehicule.marque }} {{ miseLocation.vehicule.modele }}  </td>
+						 {# on va chercher l'image du véhicule depuis le dossier oploads et grâce à la balise src en html 
+						    on peut afficher l'image .
+							la DB stocke juste le nom de l'image
+						  #}
+						<td><img src="/uploads/{{  miseLocation.vehicule.imageVehicule }}" alt="photo véhicule"</td>
+						{#<td>{{  miseLocation.statutMise}}</td>#}
+                        <td>{{ miseLocation.prixParJour ~ ' €/jour' }}</td>
+                              
+
+					
+						
+                          
+                            
+                            
+                          {# <td>{{ location.prix * location.nbJours ~ '€' }}</td>#}
+                          
+						  
+                               
+						 
+
+		
+							  
+								 
+					
+						
+						
+						
+
+
+
+						<td>
+							<a href="{{ path('admin_mise_en_locations_edit', {'id': miseLocation.id}) }}" class="btn btn-primary">
+								<i class="fas fa-edit"></i>
+							</a>
+							<a href="{#{{ path('admin_locations_delete', {'id': location.id}) }}#}" class="btn btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+
+						</td>
+
+					</tr>
+
+
+				{% endfor %}
+			</tbody>
+
+		</table>
+
+
+	</div>
+
+	
+	<a href="{{path('admin_locations_journal')}}">
+		<button class="btn-success ml-5 ">
+			journal  des locations
+		</button>
+	</a>
+	<a href="{{path('admin_mise_en_locations_create')}}">
+		<button class="btn-success ml-5 ">
+			Ajouter une mise en location
+		</button>
+	</a>
+	{#<a href="{{path('admin_mise_en_location_index')}}">
+		<button class="btn-success ml-5 ">
+			liste  mise en location
+		</button>#}
+	</a>
+
+
+	
+
+
+	
+{% endblock %}
+
+
+

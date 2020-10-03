@@ -111,6 +111,7 @@ class AdminReparateursController extends AbstractController
 
             $hash= $encoder->encodePassword($reparateur, $reparateur->getMotDePasse());
             $reparateur->setMotDePasse($hash);
+            $reparateur->setRoles(["ROLE_REPARATEUR"]);
 
             //$data = $form->get('user')->get('specialite')->getData();
 
@@ -147,7 +148,7 @@ class AdminReparateursController extends AbstractController
      */
 
      // par injection des dépendances je passe un objet Reparation à ma fonction qui elle se charge de retrouver le concerné 
-    public function edit( Reparateur $reparateur, Request $request, EntityManagerInterface $manager){
+    public function edit( Reparateur $reparateur, Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder){
 
          /* cette fonction utlisation la notion de ParamConverter avec l'injection des dépendances, elle prend un reparateur
         en paramètre grâce au clik  puis recupère son id pour la suite
@@ -165,6 +166,10 @@ class AdminReparateursController extends AbstractController
           $form->handleRequest($request);
 
           if($form->isSubmitted()&& $form->isValid()){
+
+              
+              $hash = $encoder->encodePassword($reparateur, $reparateur->getMotDePasse());
+              $reparateur->setMotDePasse($hash);
 
               $manager->persist($reparateur);
               $manager->flush();

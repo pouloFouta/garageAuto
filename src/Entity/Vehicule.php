@@ -29,7 +29,7 @@ class Vehicule
 
     /**
      * @ORM\Column(type="string", length = 17)
-     * 
+     * //@Assert\Unique(message = "ce véhicule est existe déja")
      */
    
     private $numero_chassis;
@@ -100,7 +100,7 @@ class Vehicule
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Reparation", mappedBy="vehicule")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $reparations;
 
@@ -144,6 +144,11 @@ class Vehicule
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $imageVehicule;
+
+    /**
+     * @ORM\OneToOne(targetEntity=MiseEnLocation::class, mappedBy="vehicule", cascade={"persist", "remove"})
+     */
+    private $miseEnLocation;
 
     
    
@@ -426,7 +431,28 @@ class Vehicule
     }
 
     public function __toString()
+
     {
-        return $this->marque;
+         $voiture= $this->getMarque() . "-" .$this->getModele();
+        return $voiture ;
     }
+
+    public function getMiseEnLocation(): ?MiseEnLocation
+    {
+        return $this->miseEnLocation;
+    }
+
+    public function setMiseEnLocation(MiseEnLocation $miseEnLocation): self
+    {
+        $this->miseEnLocation = $miseEnLocation;
+
+        // set the owning side of the relation if necessary
+        if ($miseEnLocation->getVehicule() !== $this) {
+            $miseEnLocation->setVehicule($this);
+        }
+
+        return $this;
+    }
+
+    
 }

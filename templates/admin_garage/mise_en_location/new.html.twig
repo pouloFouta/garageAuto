@@ -1,0 +1,25 @@
+{% extends "admin_garage/base.html.twig" %}
+
+{% block title %} Ajout d'une mise en location{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1> Ajouter une une mise en location </h1>
+
+{{form_start(form)}}
+{{form_widget(form)}}
+<button type ="submit" class="btn btn-success"> enregistrer </button>
+{{form_end(form)}}
+
+</div>
+    
+{% endblock %}
+{% block javascripts  %}
+
+<script>
+    $(document).ready(function () {
+        bsCustomFileInput.init()
+    })
+</script>
+{% endblock %}

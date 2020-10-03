@@ -4,11 +4,14 @@ namespace App\Form;
 
 use DateTime;
 use DateTimeZone;
+use App\Entity\Vehicule;
 use App\Entity\Reparation;
 use App\Form\AdminPanneType;
 use App\Form\AdminVehiculeType;
+use App\Repository\ReparationRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -51,10 +54,20 @@ class AdminReparationType extends AbstractType
                     'en attente de pièces' => 'en attente de pièces',
                     'terminé' =>'terminé']]);
             
-            $builder->add('vehicule', AdminVehiculeType::class ,[
+            $builder->add('vehicule',AdminVehiculeType::class ,[
 
-                           'label' => false
+                           'label' => false,
+                            
+                            
+            /*'class' => Reparation::class,
+                            'query_builder' => function (ReparationRepository $er) {
+                                return $er->createQueryBuilder('r')
+                                    ->orderBy('r.vehicule', 'ASC');
+                            },
+                           'choice_label' => 'vehicule',*/ 
+               
             ]);
+
             $builder->add('pannes', CollectionType::class, 
                 [
                 'label' => false,    

@@ -11,6 +11,8 @@ use App\Repository\GestionVehiculeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 
 class AdminGestionVehiculeController extends AbstractController
 {
@@ -64,6 +66,44 @@ class AdminGestionVehiculeController extends AbstractController
         }
 
       return $this->render('admin_garage/gestion_vehicule/new.html.twig' ,[
+            'form' => $form->createView()
+
+      ]);
+
+
+    }
+     /**
+      
+     * 
+     * @IsGranted("ROLE_ADMIN")
+     * pour éditer une gestion
+     * 
+     * @Route("admin/gestionVehicule/{id}/edit", name ="admin_gestion_edit")
+     * 
+     *  @return Response
+     */
+   
+   
+    public function edit (Request $request, GestionVehicule $gestion,  EntityManagerInterface $manager)
+
+    {
+
+
+        $form= $this->createForm(AdminGestionVehiculeType::class, $gestion);
+
+           $form->handleRequest($request);
+           if ($form->isSubmitted() && $form->isValid()) {
+
+                
+            
+            $manager->persist($gestion);
+
+            $manager->flush();
+
+            return $this->redirectToRoute('admin_gestion_index');
+        }
+
+      return $this->render('admin_garage/gestion_vehicule/edit.html.twig' ,[
             'form' => $form->createView()
 
       ]);

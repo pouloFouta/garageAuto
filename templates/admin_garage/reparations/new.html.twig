@@ -42,7 +42,10 @@
 {% block _admin_reparation_vehicule_widget %}
  <h4> <strong> Encoder les données du véhicule</strong>  </h4>
  {{ form_widget(form) }}
+{#<div class="form-group">
 
+          <button type="button" id="add-vehicule" class ="btn btn-primary"> Ajouter un véhicule </button>
+</div>#}
 {% endblock %}
 
 {% block _admin_reparation_vehicule_client_widget %}
@@ -155,4 +158,129 @@ gererButton();
 	</script>
 
 
+
+
+
+{# bouton d'ajout véhicule#}
+
+{#{% block  _admin_reparation_vehicule_entry_row %}
+
+
+ {{ form_widget(form) }}
+
 {% endblock %}
+
+{% block _admin_reparation_vehicule_entry_widget  %}
+
+<div class="form-group" >
+{#id="block_{{id}}"
+
+
+		<div class="row">
+
+			<div class="col-10">
+				<div class="row">
+					<div class="col">
+						{{ form_widget(form.numero_chassis) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.immatriculation) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.marque) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.modele) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.couleur) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.carburant) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.kilometrage_achat) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.kilometrage_actuel) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.nbPortes) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.puissance) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.transmission) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.options) }}
+					</div>
+					
+
+				</div>
+
+			</div>
+			<div  class="col-2">
+				<button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger">X</button>
+
+
+			</div>
+		</div>
+
+	</div>
+
+{% endblock %}
+
+
+
+
+	<script>
+
+		$('#add-vehicule').click(function () { 
+                        
+                        // num des champs suivants
+
+const nbp = $('#admin_reparation_vehicule div.form-group').length;
+
+
+// récuperer le prototype des entrées
+
+const temp = $('#admin_reparation_vehicule').data('prototype').replace(/__name__/g, nbp);
+
+// console.log(temp);
+
+// mettre le code dans la Div de la collection des pannes
+
+$('#admin_reparation_vehicule').append(temp);
+
+ // Appel de la fonction pour supprimer une panne si possible à chaque affichage du formulaire
+vehiculeButton();
+
+});
+
+// console.log(temp);
+
+function vehiculeButton() {
+
+$('button[data-action="delete"]').click(function () {
+
+const cible = this.dataset.target;
+
+console.log(cible);
+
+$(cible).remove();
+
+});
+
+
+}
+
+// appel de la fonction également pour l'édition du du formulaire
+vehiculeButton();
+
+	</script>
+	#}
+{% endblock %}
+
+

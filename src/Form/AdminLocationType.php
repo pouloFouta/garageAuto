@@ -22,13 +22,13 @@ class AdminLocationType extends AbstractType
 
                 
              ->add('prix')
-             ->add('statut_location',ChoiceType::class, [
+             /*->add('statut_location',ChoiceType::class, [
                 'label' => 'statut location',
                 'choices' => [
                     'libre' => 'libre',
-                    'loué' => 'loué',
+                    'reservé' => 'reservé',
                     'annulé' => 'annulé',
-                    'payé' =>'payé']])
+                    'payé' =>'payé']])*/
             //->add('client')
             -> add('vehicule', AdminVehiculeVenteType::class ,[
 

@@ -14,6 +14,7 @@ class Facture
 {
     /**
      * @ORM\Id()
+     * 
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
@@ -25,14 +26,18 @@ class Facture
     private $date_facture;
 
     /**
-     * @ORM\Column(type="decimal", precision=2, scale=2)
+     * @ORM\Column(type="decimal", precision=5, scale=2)
      */
     private $tva;
 
+    
+
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=5, scale=2, nullable=true)
      */
     private $montant;
+
+     
 
     /**
      * @ORM\ManyToOne(targetEntity="Responsable" ,inversedBy="factures")
@@ -46,6 +51,7 @@ class Facture
 
     private $reparations;
 
+     
     /**
      * @ORM\ManyToOne(targetEntity=Client::class, inversedBy="factures")
      */
@@ -61,6 +67,12 @@ class Facture
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $est_paye;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     */
+    private $montantHorsTva;
+
 
     public function __construct()
     {
@@ -183,6 +195,18 @@ class Facture
     public function setEstPaye(?string $est_paye): self
     {
         $this->est_paye = $est_paye;
+
+        return $this;
+    }
+
+    public function getMontantHorsTva(): ?string
+    {
+        return $this->montantHorsTva;
+    }
+
+    public function setMontantHorsTva(string $montantHorsTva): self
+    {
+        $this->montantHorsTva = $montantHorsTva;
 
         return $this;
     }

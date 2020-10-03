@@ -3,15 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Location;
+use App\Entity\MiseEnLocation;
 use App\Form\AdminLocationType;
+use App\Form\ClientLocationType;
 use App\Repository\LocationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 
@@ -21,11 +23,11 @@ class AdminLocationsController extends AbstractController
     /**
      * 
      * @Route("/admin/locations", name="admin_locations_index")
-     * @return Location[] Returns an array of Location objects
+     * @return MiseEnLocation[] Returns an array of MiseEnLocation objects
      */
     public function index()
     {
-        $repo = $this->getDoctrine()->getRepository(Location::class);
+        $repo = $this->getDoctrine()->getRepository(MiseEnLocation::class);
         $locations = $repo->findAll();
 
         return $this->render('admin_garage/locations/index.html.twig', [
@@ -154,7 +156,7 @@ class AdminLocationsController extends AbstractController
     public function edit( Request $request, EntityManagerInterface $manager, Location $location) {
        
        
-        $form = $this->createForm(AdminLocationType::class, $location);
+        $form = $this->createForm(ClientLocationType::class, $location);
 
         $form->handleRequest($request);
 
@@ -167,7 +169,7 @@ class AdminLocationsController extends AbstractController
             
             /**  @var UploadedFile $uneimage */
             // aller d'abord sur l'objet véhicule  puis recupérer la valeur de imageFichier depuis le formulaire de ventes
-            $uneimage =$form->get('vehicule')->get('imageFichier')->getData();
+           /* $uneimage =$form->get('vehicule')->get('imageFichier')->getData();
               //dump($uneimage);
              
             // traitement du fichier téléchargé
@@ -197,11 +199,12 @@ class AdminLocationsController extends AbstractController
             
             }
                 
-            
+              
         
-          
+          */
             // afin de faire fonctionner la modification de la location , 
             //il faudra choisir une image même si la même image (car le nom de l'image est génerer à chaque nouvelle soumission )
+            $voiture =$location->getVehicule();
             $manager->persist($voiture);
             
             $manager->persist($location);
@@ -214,7 +217,7 @@ class AdminLocationsController extends AbstractController
 
               );
         
-            return $this->redirectToRoute('admin_locations_index');
+            return $this->redirectToRoute('admin_locations_journal');
             
         
     }
